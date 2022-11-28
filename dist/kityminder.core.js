@@ -1,9 +1,9 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2018-09-17
+ * Kity Minder Core - v1.4.50 - 2022-11-28
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
- * Copyright (c) 2018 Baidu FEX; Licensed BSD-3-Clause
+ * Copyright (c) 2022 Baidu FEX; Licensed BSD-3-Clause
  * ====================================================
  */
 
@@ -3803,16 +3803,15 @@ _p[35] = {
         _p.r(7);
         _p.r(24);
         // 模块依赖
-        _p.r(42);
         _p.r(43);
         _p.r(44);
         _p.r(45);
         _p.r(46);
         _p.r(47);
         _p.r(48);
-        _p.r(50);
         _p.r(49);
         _p.r(51);
+        _p.r(50);
         _p.r(52);
         _p.r(53);
         _p.r(54);
@@ -3826,23 +3825,26 @@ _p[35] = {
         _p.r(62);
         _p.r(63);
         _p.r(64);
-        _p.r(68);
         _p.r(65);
-        _p.r(67);
+        _p.r(69);
         _p.r(66);
-        _p.r(40);
+        _p.r(68);
+        _p.r(67);
+        _p.r(41);
         _p.r(36);
-        _p.r(37);
         _p.r(38);
         _p.r(39);
-        _p.r(41);
-        _p.r(75);
+        _p.r(40);
+        _p.r(42);
+        _p.r(37);
         _p.r(78);
-        _p.r(77);
-        _p.r(76);
-        _p.r(78);
+        _p.r(81);
         _p.r(80);
         _p.r(79);
+        _p.r(81);
+        _p.r(83);
+        _p.r(82);
+        _p.r(77);
         _p.r(0);
         _p.r(1);
         _p.r(2);
@@ -3850,12 +3852,13 @@ _p[35] = {
         _p.r(4);
         _p.r(5);
         _p.r(6);
-        _p.r(69);
-        _p.r(73);
-        _p.r(70);
-        _p.r(72);
         _p.r(71);
+        _p.r(75);
+        _p.r(72);
         _p.r(74);
+        _p.r(73);
+        _p.r(76);
+        _p.r(70);
         module.exports = kityminder;
     }
 };
@@ -3984,8 +3987,75 @@ _p[36] = {
     }
 };
 
-//src/layout/filetree.js
+//src/layout/catalogue.js
 _p[37] = {
+    value: function(require, exports, module) {
+        var kity = _p.r(17);
+        var Layout = _p.r(18);
+        function registerLayoutForDir() {
+            var name = "catalogue";
+            Layout.register(name, kity.createClass({
+                base: Layout,
+                doLayout: function(parent, children, round) {
+                    var pBox = parent.getContentBox();
+                    var indent = 40;
+                    parent.setVertexOut(new kity.Point(pBox.cx, pBox["bottom"]));
+                    parent.setLayoutVectorOut(new kity.Vector(0, 1));
+                    if (!children.length) return;
+                    children.forEach(function(child) {
+                        var cbox = child.getContentBox();
+                        child.setLayoutTransform(new kity.Matrix());
+                        child.setVertexIn(new kity.Point(cbox.left, cbox.cy));
+                        child.setLayoutVectorIn(new kity.Vector(1, 0));
+                    });
+                    this.align(children, "left");
+                    this.stack(children, "y");
+                    var xAdjust = 0;
+                    xAdjust += pBox.cx;
+                    xAdjust += indent;
+                    xAdjust += children[0].getStyle("margin-left");
+                    var yAdjust = 0;
+                    yAdjust += pBox.bottom;
+                    yAdjust += parent.getStyle("margin-bottom");
+                    yAdjust += children[0].getStyle("margin-top");
+                    this.move(children, xAdjust, yAdjust);
+                },
+                getOrderHint: function(node) {
+                    var hint = [];
+                    var box = node.getLayoutBox();
+                    var offset = node.getLevel() > 1 ? 3 : 5;
+                    hint.push({
+                        type: "up",
+                        node: node,
+                        area: new kity.Box({
+                            x: box.x,
+                            y: box.top - node.getStyle("margin-top") - offset,
+                            width: box.width,
+                            height: node.getStyle("margin-top")
+                        }),
+                        path: [ "M", box.x, box.top - offset, "L", box.right, box.top - offset ]
+                    });
+                    hint.push({
+                        type: "down",
+                        node: node,
+                        area: new kity.Box({
+                            x: box.x,
+                            y: box.bottom + offset,
+                            width: box.width,
+                            height: node.getStyle("margin-bottom")
+                        }),
+                        path: [ "M", box.x, box.bottom + offset, "L", box.right, box.bottom + offset ]
+                    });
+                    return hint;
+                }
+            }));
+        }
+        registerLayoutForDir();
+    }
+};
+
+//src/layout/filetree.js
+_p[38] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var Layout = _p.r(18);
@@ -4067,7 +4137,7 @@ _p[37] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[38] = {
+_p[39] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var Layout = _p.r(18);
@@ -4121,7 +4191,7 @@ _p[38] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[39] = {
+_p[40] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var Layout = _p.r(18);
@@ -4174,7 +4244,7 @@ _p[39] = {
 };
 
 //src/layout/mind.js
-_p[40] = {
+_p[41] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var Layout = _p.r(18);
@@ -4238,7 +4308,7 @@ _p[40] = {
  * @author: along
  * @copyright: bpd729@163.com, 2015
  */
-_p[41] = {
+_p[42] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var Layout = _p.r(18);
@@ -4301,7 +4371,7 @@ _p[41] = {
 };
 
 //src/module/arrange.js
-_p[42] = {
+_p[43] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var MinderNode = _p.r(21);
@@ -4439,7 +4509,7 @@ _p[42] = {
 };
 
 //src/module/basestyle.js
-_p[43] = {
+_p[44] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -4447,7 +4517,7 @@ _p[43] = {
         var MinderNode = _p.r(21);
         var Command = _p.r(9);
         var Module = _p.r(20);
-        var TextRenderer = _p.r(61);
+        var TextRenderer = _p.r(62);
         Module.register("basestylemodule", function() {
             var km = this;
             function getNodeDataOrStyle(node, name) {
@@ -4554,7 +4624,7 @@ _p[43] = {
 };
 
 //src/module/clipboard.js
-_p[44] = {
+_p[45] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -4703,7 +4773,7 @@ _p[44] = {
 };
 
 //src/module/dragtree.js
-_p[45] = {
+_p[46] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5044,7 +5114,7 @@ _p[45] = {
 };
 
 //src/module/expand.js
-_p[46] = {
+_p[47] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5310,7 +5380,7 @@ _p[46] = {
 };
 
 //src/module/font.js
-_p[47] = {
+_p[48] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5318,7 +5388,7 @@ _p[47] = {
         var MinderNode = _p.r(21);
         var Command = _p.r(9);
         var Module = _p.r(20);
-        var TextRenderer = _p.r(61);
+        var TextRenderer = _p.r(62);
         function getNodeDataOrStyle(node, name) {
             return node.getData(name) || node.getStyle(name);
         }
@@ -5457,7 +5527,7 @@ _p[47] = {
 };
 
 //src/module/hyperlink.js
-_p[48] = {
+_p[49] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5569,7 +5639,7 @@ _p[48] = {
 };
 
 //src/module/image-viewer.js
-_p[49] = {
+_p[50] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var keymap = _p.r(15);
@@ -5674,7 +5744,7 @@ _p[49] = {
 };
 
 //src/module/image.js
-_p[50] = {
+_p[51] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5796,7 +5866,7 @@ _p[50] = {
 };
 
 //src/module/keynav.js
-_p[51] = {
+_p[52] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -5951,7 +6021,7 @@ _p[51] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[52] = {
+_p[53] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var Command = _p.r(9);
@@ -6026,7 +6096,7 @@ _p[52] = {
 };
 
 //src/module/node.js
-_p[53] = {
+_p[54] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6176,7 +6246,7 @@ _p[53] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[54] = {
+_p[55] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6274,7 +6344,7 @@ _p[54] = {
 };
 
 //src/module/outline.js
-_p[55] = {
+_p[56] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6391,7 +6461,7 @@ _p[55] = {
 };
 
 //src/module/priority.js
-_p[56] = {
+_p[57] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6517,7 +6587,7 @@ _p[56] = {
 };
 
 //src/module/progress.js
-_p[57] = {
+_p[58] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6642,7 +6712,7 @@ _p[57] = {
 };
 
 //src/module/resource.js
-_p[58] = {
+_p[59] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -6972,7 +7042,7 @@ _p[58] = {
 };
 
 //src/module/select.js
-_p[59] = {
+_p[60] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -7117,7 +7187,7 @@ _p[59] = {
 };
 
 //src/module/style.js
-_p[60] = {
+_p[61] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -7222,7 +7292,7 @@ _p[60] = {
 };
 
 //src/module/text.js
-_p[61] = {
+_p[62] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -7476,7 +7546,7 @@ _p[61] = {
 };
 
 //src/module/view.js
-_p[62] = {
+_p[63] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -7798,7 +7868,7 @@ _p[62] = {
 };
 
 //src/module/zoom.js
-_p[63] = {
+_p[64] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var utils = _p.r(33);
@@ -7977,7 +8047,7 @@ _p[63] = {
 };
 
 //src/protocol/json.js
-_p[64] = {
+_p[65] = {
     value: function(require, exports, module) {
         var data = _p.r(12);
         data.registerProtocol("json", module.exports = {
@@ -7996,7 +8066,7 @@ _p[64] = {
 };
 
 //src/protocol/markdown.js
-_p[65] = {
+_p[66] = {
     value: function(require, exports, module) {
         var data = _p.r(12);
         var LINE_ENDING_SPLITER = /\r\n|\r|\n/;
@@ -8127,7 +8197,7 @@ _p[65] = {
 };
 
 //src/protocol/png.js
-_p[66] = {
+_p[67] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var data = _p.r(12);
@@ -8347,7 +8417,7 @@ _p[66] = {
 };
 
 //src/protocol/svg.js
-_p[67] = {
+_p[68] = {
     value: function(require, exports, module) {
         var data = _p.r(12);
         /**
@@ -8619,7 +8689,7 @@ _p[67] = {
 };
 
 //src/protocol/text.js
-_p[68] = {
+_p[69] = {
     value: function(require, exports, module) {
         var data = _p.r(12);
         var Browser = _p.r(17).Browser;
@@ -8841,6 +8911,29 @@ _p[68] = {
     }
 };
 
+//src/template/catalogue.js
+/**
+ * @fileOverview
+ *
+ * 往右布局结构模板
+ *
+ * @author: techird
+ * @copyright: Baidu FEX, 2014
+ */
+_p[70] = {
+    value: function(require, exports, module) {
+        var template = _p.r(31);
+        template.register("catalogue", {
+            getLayout: function(node) {
+                return "catalogue";
+            },
+            getConnect: function(node) {
+                return "l";
+            }
+        });
+    }
+};
+
 //src/template/default.js
 /**
  * @fileOverview
@@ -8850,7 +8943,7 @@ _p[68] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[69] = {
+_p[71] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("default", {
@@ -8884,7 +8977,7 @@ _p[69] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[70] = {
+_p[72] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("filetree", {
@@ -8912,7 +9005,7 @@ _p[70] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[71] = {
+_p[73] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("fish-bone", {
@@ -8954,7 +9047,7 @@ _p[71] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[72] = {
+_p[74] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("right", {
@@ -8978,7 +9071,7 @@ _p[72] = {
  * @author: techird
  * @copyright: Baidu FEX, 2014
  */
-_p[73] = {
+_p[75] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("structure", {
@@ -9001,7 +9094,7 @@ _p[73] = {
  * @author: along
  * @copyright: bpd729@163.com, 2015
  */
-_p[74] = {
+_p[76] = {
     value: function(require, exports, module) {
         var template = _p.r(31);
         template.register("tianpan", {
@@ -9021,8 +9114,60 @@ _p[74] = {
     }
 };
 
+//src/theme/catalogue.js
+_p[77] = {
+    value: function(require, exports, module) {
+        const theme = _p.r(32);
+        theme.register("catalogue", {
+            background: "#fff",
+            "root-color": "#FFF",
+            "root-background": "#417FF9",
+            "root-stroke": "none",
+            "root-font-size": 16,
+            "root-padding": [ 12, 21 ],
+            "root-radius": 6,
+            "root-space": 10,
+            "main-color": "#333333",
+            "main-background": "#F0F2F5",
+            "main-stroke": "none ",
+            "main-font-size": 14,
+            "main-padding": [ 6, 20 ],
+            "main-margin": [ 8, 0, 0, 0 ],
+            "main-radius": 6,
+            "main-space": 5,
+            "sub-color": "#333333",
+            "sub-background": "#F0F2F5",
+            "sub-stroke": "none",
+            "sub-font-size": 14,
+            "sub-padding": [ 5, 10 ],
+            "sub-margin": [ 5, 0, 0, 0 ],
+            "sub-tree-margin": 1,
+            "sub-radius": 6,
+            "sub-space": 5,
+            "connect-color": "#417FF9",
+            "connect-width": 1,
+            "main-connect-width": 1,
+            "connect-radius": 1,
+            "selected-background": "none",
+            "selected-stroke": "#2FBDFF",
+            "selected-color": "black",
+            "marquee-background": "rgba(255,255,255,.3)",
+            "marquee-stroke": "white",
+            "drop-hint-color": "yellow",
+            "sub-drop-hint-width": 2,
+            "main-drop-hint-width": 4,
+            "root-drop-hint-width": 4,
+            "order-hint-area-color": "rgba(0, 255, 0, .5)",
+            "order-hint-path-color": "#0f0",
+            "order-hint-path-width": 1,
+            "text-selection-color": "rgb(27,171,255)",
+            "line-height": 1.5
+        });
+    }
+};
+
 //src/theme/default.js
-_p[75] = {
+_p[78] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         [ "classic", "classic-compact" ].forEach(function(name) {
@@ -9081,7 +9226,7 @@ _p[75] = {
 };
 
 //src/theme/fish.js
-_p[76] = {
+_p[79] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         theme.register("fish", {
@@ -9132,7 +9277,7 @@ _p[76] = {
 };
 
 //src/theme/fresh.js
-_p[77] = {
+_p[80] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var theme = _p.r(32);
@@ -9201,7 +9346,7 @@ _p[77] = {
 };
 
 //src/theme/snow.js
-_p[78] = {
+_p[81] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         [ "snow", "snow-compact" ].forEach(function(name) {
@@ -9256,7 +9401,7 @@ _p[78] = {
 };
 
 //src/theme/tianpan.js
-_p[79] = {
+_p[82] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         [ "tianpan", "tianpan-compact" ].forEach(function(name) {
@@ -9318,7 +9463,7 @@ _p[79] = {
 };
 
 //src/theme/wire.js
-_p[80] = {
+_p[83] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         theme.register("wire", {
