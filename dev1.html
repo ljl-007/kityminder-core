@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>KityMinder Example</title>
+
+    <link rel="stylesheet" href="src/kityminder.css" rel="stylesheet" />
+
+    <style type="text/css">
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #minder-view {
+        height: 100%;
+        width: 100%;
+        /* position: absolute;
+            border: 1px solid #ccc;
+            left: 10px;
+            top: 10px;
+            bottom: 10px;
+            right: 10px; */
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="node_modules/kity/dist/kity.js"
+    ></script>
+  </head>
+  <body>
+    <script
+      id="minder-view"
+      type="application/kityminder"
+      minder-data-type="json"
+    >
+      {
+          "root": {
+              "data": {
+                  "text": "课堂教学决策思维导图"
+              },
+              "children": [
+                  { "data": { "text": "新闻" } },
+                  { "data": { "text": "网页", "priority": 1,"selected-color":"green"} },
+                  { "data": { "text": "贴吧", "priority": 2 },
+                    "children": [
+                          { "data": { "text": "新闻" ,"text":"中文文本"} ,"children":[
+                              { "data": { "text": "<p>作业数据作业数据作业数据</p>\n作业数据作业数据作业数据作业\n据作业数据作业数据作业数据作\n业数据作业数据作业数据作业数据" } }
+                          ]},
+                          { "data": { "text": "网页", "priority": 1 } },
+                          { "data": { "text": "贴吧", "priority": 2 } },
+                          { "data": { "text": "知道", "priority": 2 } },
+                          { "data": { "text": "音乐", "priority": 3 } },
+                          { "data": { "text": "图片", "priority": 3 } },
+                          { "data": { "text": "视频", "priority": 3 } },
+                          { "data": { "text": "地图", "priority": 3 } },
+                          { "data": { "text": "百科", "priority": 3 } },
+                          { "data": { "text": "更多", "hyperlink": "http://www.baidu.com/more" } }
+                      ]
+                  },
+                  { "data": { "text": "知道", "priority": 2 } },
+                  { "data": { "text": "音乐", "priority": 3 } },
+                  { "data": { "text": "图片", "priority": 3 } },
+                  { "data": { "text": "更多", "hyperlink": "http://www.baidu.com/more" } }
+              ]
+          },
+          "template": "catalogue",
+          "theme":"catalogue"
+      }
+    </script>
+  </body>
+
+  <!-- *************************** Module 形式加载引入 **************************** -->
+  <script
+    type="text/javascript"
+    src="node_modules/seajs/dist/sea-debug.js"
+  ></script>
+  <script type="text/javascript">
+    /* global seajs */
+    seajs.config({
+      base: './src'
+    })
+    define('start', function (require) {
+      var Minder = require('kityminder').Minder
+      // const Template = require('kityminder').Template
+      // const Layout = require('kityminder').Layout
+      // const Theme = require('kityminder').Theme
+      // // 注册一个模板
+      //     // Template.register('zhlTestTree', {
+      //     //     getLayout: function(node) {
+      //     //         return 'zhl-homework-tree';
+      //     //     },
+
+      //     //     getConnect: function(node) {
+      //     //         return 'l';
+      //     //     }
+      //     // });
+      // // 注册布局Layout
+      // // 注册主题theme
+      //     Theme.register('homework-tree',{
+      //     'background': '#fff',
+
+      //     'root-color': '#FFF',
+      //     'root-background': '#417FF9',
+      //     'root-stroke': 'none',
+      //     'root-font-size': 16,
+      //     'root-padding': [12, 21],
+      //     'root-radius': 6,
+      //     'root-space': 10,
+
+      //     'main-color': '#333333',
+      //     'main-background': '#F0F2F5',
+      //     'main-stroke': 'none ',
+      //     'main-font-size': 14,
+      //     'main-padding': [6, 20],
+      //     'main-margin': [8,0,0,0],
+      //     'main-radius': 6,
+      //     'main-space': 5,
+
+      //     'sub-color': '#333333',
+      //     'sub-background': '#F0F2F5',
+      //     'sub-stroke': 'none',
+      //     'sub-font-size': 14,
+      //     'sub-padding': [5, 10],
+      //     'sub-margin':[5,0,0,0],
+      //     'sub-tree-margin': 1,
+      //     'sub-radius': 6,
+      //     'sub-space': 5,
+
+      //     'connect-color': '#417FF9',
+      //     'connect-width': 1,
+      //     'main-connect-width':1,
+      //     'connect-radius': 1,
+
+      //     'selected-background': 'none',
+      //     'selected-stroke': '#2FBDFF',
+      //     'selected-color': 'black',
+
+      //     'marquee-background': 'rgba(255,255,255,.3)',
+      //     'marquee-stroke': 'white',
+
+      //     'drop-hint-color': 'yellow',
+      //     'sub-drop-hint-width': 2,
+      //     'main-drop-hint-width': 4,
+      //     'root-drop-hint-width': 4,
+
+      //     'order-hint-area-color': 'rgba(0, 255, 0, .5)',
+      //     'order-hint-path-color': '#0f0',
+      //     'order-hint-path-width': 1,
+
+      //     'text-selection-color': 'rgb(27,171,255)',
+      //     'line-height':1.5
+      // })
+      // 注册方法
+
+      // console.log('实例',Template)
+      // 创建 km 实例
+
+      var km = new Minder()
+      // console.log(km)
+      // console.log(Minder.getTemplateList(),Minder.getThemeList(),Minder.getLayoutList())
+      km.setup('#minder-view')
+      // km.disable();
+      // setTimeout(() =>{
+      //     console.log('切换实例')
+      //     km.execCommand('Template','filetree');
+      // },1000)
+      // Minder
+      km.executionCallBack = function (e) {
+        if (e.commandName === 'removenode') {
+          return true
+        }
+
+        return false
+      }
+      km.on('mousedown', e => {
+        // if(e.originEvent.button === 0){
+
+        //     return
+        // }
+        // // 点击右键
+        // if(e.originEvent.button === 2){
+
+        //     return
+        // }
+        var node = km.getSelectedNode()
+        if (node) {
+          console.log('click', km)
+        }
+      })
+
+      //   km.setStatus('readonly',true)
+      km.on('beforeExecCommand ', e => {
+        const node  = km.getSelectedNode()
+        e.commandArgs = ['gagagaga']
+        if (e.commandName === 'removenode') {
+          console.log('beforeExecCommand',e)
+          // 实现删除逻辑
+          e.shouldStopPropagation = function(){
+            return node.getLevel() < 3
+          }
+        }
+      })
+
+      //   setTimeout(() => {
+      //     console.log('跟新名称')
+      //     km.execCommand('text', '节点名称')
+      //   }, 3000)
+    })
+    seajs.use('start')
+  </script>
+</html>

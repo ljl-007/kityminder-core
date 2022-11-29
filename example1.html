@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>KityMinder Example</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link href="favicon.ico" type="image/x-icon" rel="shortcut icon" />
+    <link rel="stylesheet" href="src/kityminder.css" rel="stylesheet" />
+
+    <style type="text/css">
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
+      .mind {
+        height: 100%;
+        width: 100%;
+        /* position: absolute;
+            border: 1px solid #ccc;
+            left: 10px;
+            top: 10px;
+            bottom: 10px;
+            right: 10px; */
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="node_modules/kity/dist/kity.min.js"
+    ></script>
+  </head>
+  <body>
+    <div class="buttons"><button class="add-btn">添加节点</button></div>
+    <div class="mind" id="mind-content"></div>
+  </body>
+
+  <script type="text/javascript" src="dist/kityminder.core.js"></script>
+  <script type="text/javascript">
+    // 创建 km 实例
+    /* global kityminder */
+    // var km = window.km = new kityminder.Minder();
+    const data = {
+      data: {
+        text: '百度产品',
+        image: 'https://www.baidu.com/img/bd_logo1.png?where=super',
+        imageSize: { width: 270, height: 129 }
+      },
+      children: [
+        { data: { text: '新闻' } },
+        { data: { text: '网页', priority: 1 } },
+        { data: { text: '贴吧', priority: 2 } },
+        { data: { text: '知道', priority: 2 } },
+        { data: { text: '音乐', priority: 3 } },
+        { data: { text: '图片', priority: 3 } },
+        { data: { text: '视频', priority: 3 } },
+        { data: { text: '地图', priority: 3 } },
+        { data: { text: '百科', priority: 3 } },
+        { data: { text: '更多', hyperlink: 'http://www.baidu.com/more' } }
+      ]
+    }
+    var km = new kityminder.Minder()
+    km.renderTo('.mind')
+    km.importJson({
+      root: data,
+      template: 'catalogue',
+      theme: 'catalogue'
+    })
+    const addBtn = document.querySelector('.add-btn')
+    addBtn.onclick = function (e) {
+      const nodes = [
+        {
+          data: { text: '自动添加1' },
+          children: [
+            { data: { text: '自动添加2' } },
+            {
+              data: { text: '自动添加3' },
+              children: [
+                { data: { text: '自动添加4' } },
+                { data: { text: '自动添加5' } }
+              ]
+            }
+          ]
+        },
+        {
+          data: { text: '自动添加6' }
+        }
+      ]
+      function insertNode(node, type) {
+        if (type === 1) {
+          km.execCommand('AppendChildNode', node.data)
+        } else {
+          km.execCommand('AppendSiblingNode', node.data)
+        }
+        if (node.children) {
+          node.children.forEach((children, index) => {
+            if (index === 0) {
+              insertNode(children, 1)
+            } else {
+              insertNode(children, 2)
+            }
+          })
+        }
+      }
+      nodes.forEach(node => {
+        insertNode(node, 1)
+      })
+
+      //   km.execCommand('AppendChildNode', {
+      //     text: '自动添加',
+      //     children: [{ text: 'ddddd' }]
+      //   })
+    }
+    km.on('beforeExecCommand ', e => {
+      const node = km.getSelectedNode()
+      if (e.commandName === 'removenode') {
+        console.log('beforeExecCommand', e)
+        // 实现删除逻辑
+        e.shouldStopPropagation = function () {
+          return node.getLevel() < 3
+        }
+      }
+    })
+  </script>
+</html>
