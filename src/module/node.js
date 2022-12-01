@@ -23,7 +23,14 @@ define(function(require, exports, module) {
             if (!parent) {
                 return null;
             }
-            var node = km.createNode(text, parent);
+            if(text){
+                text = text
+            }else{
+                const {isVirtualNode} = parent.data
+                if (isVirtualNode) return
+                text = { text: '选择教学目标', type: 1, isVirtualNode: true }
+            }
+            node = km.createNode(text, parent);
             km.select(node, true);
             if (parent.isExpanded()) {
                 node.render();
@@ -54,8 +61,23 @@ define(function(require, exports, module) {
             var sibling = km.getSelectedNode();
             var parent = sibling.parent;
             if (!parent) {
+                text = text? text: { text: '选择教学目标', type: 1, isVirtualNode: true }
                 return km.execCommand('AppendChildNode', text);
             }
+             
+            if(text){
+                text = text
+            }else{
+                const {isVirtualNode, type} = sibling.data
+                if (isVirtualNode) return
+                const def_text = {
+                    1:'选择教学目标',
+                    2:'选择教学目标',
+                    3:'选择题目'
+                }
+                text = { text: def_text[type], type: type, isVirtualNode: true }
+            }
+
             var node = km.createNode(text, parent, sibling.getIndex() + 1);
             node.setGlobalLayoutTransform(sibling.getGlobalLayoutTransform());
             km.select(node, true);
