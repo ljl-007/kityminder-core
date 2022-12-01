@@ -216,15 +216,10 @@ define(function(require, exports, module) {
             base: Command,
             execute: function(km, focusNode) {
 
-                focusNode = focusNode || km.getRoot();
-                var viewport = km.getPaper().getViewPort();
-                var offset = focusNode.getRenderContainer().getRenderBox('view');
-                var dx = viewport.center.x - offset.x - offset.width / 2,
-                    dy = viewport.center.y - offset.y;
                 var dragger = km._viewDragger;
 
                 var duration = km.getOption('viewAnimationDuration');
-                dragger.move(new kity.Point(dx, dy), duration);
+                dragger.moveTo(new kity.Point(50, 50), duration);
                 this.setContentChanged(false);
             },
             enableReadOnly: true
