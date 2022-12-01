@@ -110,7 +110,14 @@ define(function(require, exports, module) {
          * 获得节点的类型（root|main|sub）
          */
         getType: function(type) {
-            this.type = ['root', 'main', 'sub'][Math.min(this.getLevel(), 2)];
+            // this.type = ['root', 'main', 'sub'][Math.min(this.getLevel(), 2)];
+            const _type ={
+                0:'root',
+                1:'knp',
+                2:'grp',
+                3:'sub'
+            }
+            this.type =_type[this.getDataType()||0]
             return this.type;
         },
 
