@@ -26,7 +26,7 @@ define(function(require, exports, module) {
             if(text){
                 text = text
             }else{
-                const {isVirtualNode} = parent.data
+                var isVirtualNode = parent.data.isVirtualNode
                 if (isVirtualNode) return
                 text = { text: '选择教学目标', type: 1, isVirtualNode: true }
             }
@@ -68,9 +68,10 @@ define(function(require, exports, module) {
             if(text){
                 text = text
             }else{
-                const {isVirtualNode, type} = sibling.data
+                var isVirtualNode= sibling.data.isVirtualNode
+                var type = sibling.data.type
                 if (isVirtualNode) return
-                const def_text = {
+                var def_text = {
                     1:'选择教学目标',
                     2:'选择教学目标',
                     3:'选择题目'

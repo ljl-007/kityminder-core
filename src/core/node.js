@@ -111,7 +111,7 @@ define(function(require, exports, module) {
          */
         getType: function(type) {
             // this.type = ['root', 'main', 'sub'][Math.min(this.getLevel(), 2)];
-            const _type ={
+            var _type ={
                 0:'root',
                 1:'knp',
                 2:'grp',
