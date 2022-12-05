@@ -168,6 +168,14 @@ define(function(require, exports, module) {
         },
 
         /**
+         * data的节点类型
+         * @returns {Number}
+         */
+        getDataType: function(){
+            return this.data.type || null;
+        },
+
+        /**
          * 先序遍历当前节点树
          * @param  {Function} fn 遍历函数
          */
