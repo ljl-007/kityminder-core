@@ -28,7 +28,7 @@ define(function(require, exports, module) {
             }else{
                 var isVirtualNode = parent.data.isVirtualNode
                 if (isVirtualNode) return
-                text = { text: '选择教学目标', type: 1, isVirtualNode: true }
+                text = { text: '双击选择教学目标', type: 1, isVirtualNode: true }
             }
             node = km.createNode(text, parent);
             km.select(node, true);
@@ -61,7 +61,7 @@ define(function(require, exports, module) {
             var sibling = km.getSelectedNode();
             var parent = sibling.parent;
             if (!parent) {
-                text = text? text: { text: '选择教学目标', type: 1, isVirtualNode: true }
+                text = text? text: { text: '双击选择教学目标', type: 1, isVirtualNode: true }
                 return km.execCommand('AppendChildNode', text);
             }
              
@@ -72,8 +72,7 @@ define(function(require, exports, module) {
                 var type = sibling.data.type
                 if (isVirtualNode) return
                 var def_text = {
-                    1:'选择教学目标',
-                    2:'选择教学目标',
+                    1:'双击选择教学目标',
                     3:'选择题目'
                 }
                 text = { text: def_text[type], type: type, isVirtualNode: true }

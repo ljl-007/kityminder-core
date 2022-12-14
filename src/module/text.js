@@ -140,7 +140,13 @@ define(function(require, exports, module) {
             }
 
             var nodeText = node.getText();
-            var textArr = nodeText ? nodeText.split('\n') : [' '];
+            var textArr = nodeText
+                            ? utils.isArray(nodeText)
+                            ? nodeText
+                            : nodeText
+                            ? nodeText.split('\n')
+                            : ['']
+                            : ['']
 
             var lineHeight = node.getStyle('line-height');
 
@@ -187,22 +193,36 @@ define(function(require, exports, module) {
                     textGroup.removeItem(i);
                 }
             } else if (textLength > textGroupLength) {
-                var growth = textLength - textGroupLength;
-                while (growth--) {
-                    textShape = new kity.Text()
-                        .setAttr('text-rendering', 'inherit');
+                var growth = 0;
+                while (growth < textLength) {
+                    textShape = new kity.Text().setAttr('text-rendering', 'inherit')
                     if (kity.Browser.ie || kity.Browser.edge) {
-                        textShape.setVerticalAlign('top');
+                        textShape.setVerticalAlign('top')
                     } else {
-                        textShape.setAttr('dominant-baseline', 'text-before-edge');
+                        textShape.setAttr('dominant-baseline', 'text-before-edge')
                     }
-                    textGroup.addItem(textShape);
+                    if (utils.isString(textArr[growth])) {
+                        textShape.setContent(textArr[growth])
+                    } else {
+                        textShape = textShape.pipe(function () {
+                            var text_group = textArr[growth]? textArr[growth].text_group:[]
+                            for (var t = 0; t < text_group.length; t++) {
+                                const e = text_group[t];
+                                this.addSpan(new kity.TextSpan(e.text_key).fill(e.text_key_color || ''))
+                                this.addSpan(new kity.TextSpan(e.text_value).fill(e.text_value_color || ''))
+                            }
+                        })
+                    }
+                    textGroup.addItem(textShape)
+                    growth++
                 }
             }
 
             for (i = 0, text, textShape;
                 (text = textArr[i], textShape = textGroup.getItem(i)); i++) {
-                textShape.setContent(text);
+                if (utils.isString(text)) {
+                    textShape.setContent(text)
+                }
                 if (kity.Browser.ie || kity.Browser.edge) {
                     textShape.fixPosition();
                 }

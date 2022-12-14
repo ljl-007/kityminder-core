@@ -52,19 +52,10 @@
                               { "data": { "text": "<p>作业数据作业数据作业数据</p>\n作业数据作业数据作业数据作业\n据作业数据作业数据作业数据作\n业数据作业数据作业数据作业数据" } }
                           ]},
                           { "data": { "text": "网页", "priority": 1 } },
-                          { "data": { "text": "贴吧", "priority": 2 } },
-                          { "data": { "text": "知道", "priority": 2 } },
-                          { "data": { "text": "音乐", "priority": 3 } },
-                          { "data": { "text": "图片", "priority": 3 } },
-                          { "data": { "text": "视频", "priority": 3 } },
-                          { "data": { "text": "地图", "priority": 3 } },
-                          { "data": { "text": "百科", "priority": 3 } },
-                          { "data": { "text": "更多", "hyperlink": "http://www.baidu.com/more" } }
+                          { "data": { "text": "音乐", "priority": 3 } }
                       ]
                   },
                   { "data": { "text": "知道", "priority": 2 } },
-                  { "data": { "text": "音乐", "priority": 3 } },
-                  { "data": { "text": "图片", "priority": 3 } },
                   { "data": { "text": "更多", "hyperlink": "http://www.baidu.com/more" } }
               ]
           },
@@ -170,13 +161,6 @@
       //     km.execCommand('Template','filetree');
       // },1000)
       // Minder
-      km.executionCallBack = function (e) {
-        if (e.commandName === 'removenode') {
-          return true
-        }
-
-        return false
-      }
       km.on('mousedown', e => {
         // if(e.originEvent.button === 0){
 
@@ -196,14 +180,14 @@
       //   km.setStatus('readonly',true)
       km.on('beforeExecCommand ', e => {
         const node  = km.getSelectedNode()
-        e.commandArgs = ['gagagaga']
-        if (e.commandName === 'removenode') {
-          console.log('beforeExecCommand',e)
-          // 实现删除逻辑
-          e.shouldStopPropagation = function(){
-            return node.getLevel() < 3
-          }
-        }
+        // e.commandArgs = ['gagagaga']
+        // if (e.commandName === 'removenode') {
+        //   console.log('beforeExecCommand',e)
+        //   // 实现删除逻辑
+        //   e.shouldStopPropagation = function(){
+        //     return node.getLevel() < 3
+        //   }
+        // }
       })
 
       //   setTimeout(() => {

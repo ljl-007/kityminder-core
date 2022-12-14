@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2022-11-28
+ * Kity Minder Core - v1.4.50 - 2022-12-14
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
  * Copyright (c) 2022 Baidu FEX; Licensed BSD-3-Clause
@@ -2199,7 +2199,14 @@ _p[21] = {
          * 获得节点的类型（root|main|sub）
          */
             getType: function(type) {
-                this.type = [ "root", "main", "sub" ][Math.min(this.getLevel(), 2)];
+                // this.type = ['root', 'main', 'sub'][Math.min(this.getLevel(), 2)];
+                var _type = {
+                    0: "root",
+                    1: "knp",
+                    2: "grp",
+                    3: "sub"
+                };
+                this.type = _type[this.getDataType() || 0];
                 return this.type;
             },
             /**
@@ -2241,6 +2248,13 @@ _p[21] = {
          */
             getText: function() {
                 return this.data.text || null;
+            },
+            /**
+         * data的节点类型
+         * @returns {Number}
+         */
+            getDataType: function() {
+                return this.data.type || null;
             },
             /**
          * 先序遍历当前节点树
@@ -6120,7 +6134,18 @@ _p[54] = {
                 if (!parent) {
                     return null;
                 }
-                var node = km.createNode(text, parent);
+                if (text) {
+                    text = text;
+                } else {
+                    var isVirtualNode = parent.data.isVirtualNode;
+                    if (isVirtualNode) return;
+                    text = {
+                        text: "双击选择教学目标",
+                        type: 1,
+                        isVirtualNode: true
+                    };
+                }
+                node = km.createNode(text, parent);
                 km.select(node, true);
                 if (parent.isExpanded()) {
                     node.render();
@@ -6149,7 +6174,28 @@ _p[54] = {
                 var sibling = km.getSelectedNode();
                 var parent = sibling.parent;
                 if (!parent) {
+                    text = text ? text : {
+                        text: "双击选择教学目标",
+                        type: 1,
+                        isVirtualNode: true
+                    };
                     return km.execCommand("AppendChildNode", text);
+                }
+                if (text) {
+                    text = text;
+                } else {
+                    var isVirtualNode = sibling.data.isVirtualNode;
+                    var type = sibling.data.type;
+                    if (isVirtualNode) return;
+                    var def_text = {
+                        1: "双击选择教学目标",
+                        3: "选择题目"
+                    };
+                    text = {
+                        text: def_text[type],
+                        type: type,
+                        isVirtualNode: true
+                    };
                 }
                 var node = km.createNode(text, parent, sibling.getIndex() + 1);
                 node.setGlobalLayoutTransform(sibling.getGlobalLayoutTransform());
@@ -7429,7 +7475,7 @@ _p[62] = {
                     return node.getData(name) || node.getStyle(name);
                 }
                 var nodeText = node.getText();
-                var textArr = nodeText ? nodeText.split("\n") : [ " " ];
+                var textArr = nodeText ? utils.isArray(nodeText) ? nodeText : nodeText ? nodeText.split("\n") : [ "" ] : [ "" ];
                 var lineHeight = node.getStyle("line-height");
                 var fontSize = getDataOrStyle("font-size");
                 var fontFamily = getDataOrStyle("font-family") || "default";
@@ -7464,19 +7510,34 @@ _p[62] = {
                         textGroup.removeItem(i);
                     }
                 } else if (textLength > textGroupLength) {
-                    var growth = textLength - textGroupLength;
-                    while (growth--) {
+                    var growth = 0;
+                    while (growth < textLength) {
                         textShape = new kity.Text().setAttr("text-rendering", "inherit");
                         if (kity.Browser.ie || kity.Browser.edge) {
                             textShape.setVerticalAlign("top");
                         } else {
                             textShape.setAttr("dominant-baseline", "text-before-edge");
                         }
+                        if (utils.isString(textArr[growth])) {
+                            textShape.setContent(textArr[growth]);
+                        } else {
+                            textShape = textShape.pipe(function() {
+                                var text_group = textArr[growth] ? textArr[growth].text_group : [];
+                                for (var t = 0; t < text_group.length; t++) {
+                                    const e = text_group[t];
+                                    this.addSpan(new kity.TextSpan(e.text_key).fill(e.text_key_color || ""));
+                                    this.addSpan(new kity.TextSpan(e.text_value).fill(e.text_value_color || ""));
+                                }
+                            });
+                        }
                         textGroup.addItem(textShape);
+                        growth++;
                     }
                 }
                 for (i = 0, text, textShape; text = textArr[i], textShape = textGroup.getItem(i); i++) {
-                    textShape.setContent(text);
+                    if (utils.isString(text)) {
+                        textShape.setContent(text);
+                    }
                     if (kity.Browser.ie || kity.Browser.edge) {
                         textShape.fixPosition();
                     }
@@ -7710,13 +7771,9 @@ _p[63] = {
             var CameraCommand = kity.createClass("CameraCommand", {
                 base: Command,
                 execute: function(km, focusNode) {
-                    focusNode = focusNode || km.getRoot();
-                    var viewport = km.getPaper().getViewPort();
-                    var offset = focusNode.getRenderContainer().getRenderBox("view");
-                    var dx = viewport.center.x - offset.x - offset.width / 2, dy = viewport.center.y - offset.y;
                     var dragger = km._viewDragger;
                     var duration = km.getOption("viewAnimationDuration");
-                    dragger.move(new kity.Point(dx, dy), duration);
+                    dragger.moveTo(new kity.Point(50, 50), duration);
                     this.setContentChanged(false);
                 },
                 enableReadOnly: true
@@ -9135,6 +9192,31 @@ _p[77] = {
             "main-margin": [ 8, 0, 0, 0 ],
             "main-radius": 6,
             "main-space": 5,
+            "grp-color": "#333333",
+            "grp-background": "#DEEAFF",
+            "grp-stroke": "none ",
+            "grp-font-size": 14,
+            "grp-padding": [ 6, 20 ],
+            "grp-margin": [ 8, 0, 0, 0 ],
+            "grp-radius": 6,
+            "grp-space": 5,
+            "knp-color": "#333333",
+            "knp-background": "#DEEAFF",
+            "knp-stroke": "none ",
+            "knp-font-size": 14,
+            "knp-padding": [ 6, 20 ],
+            "knp-margin": [ 8, 0, 0, 0 ],
+            "knp-radius": 6,
+            "knp-space": 5,
+            "sub-color": "#333333",
+            "sub-background": "#F0F2F5",
+            "sub-stroke": "none",
+            "sub-font-size": 14,
+            "sub-padding": [ 5, 10 ],
+            "sub-margin": [ 5, 0, 0, 0 ],
+            "sub-tree-margin": 1,
+            "sub-radius": 6,
+            "sub-space": 5,
             "sub-color": "#333333",
             "sub-background": "#F0F2F5",
             "sub-stroke": "none",
