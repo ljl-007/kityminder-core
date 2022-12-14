@@ -9177,7 +9177,7 @@ _p[76] = {
  * @Author: liujinlei liujinlei@zhihuiliu.com
  * @Date: 2022-11-28 11:38:18
  * @LastEditors: liujinlei liujinlei@zhihuiliu.com
- * @LastEditTime: 2022-12-14 17:44:19
+ * @LastEditTime: 2022-12-14 17:59:16
  * @FilePath: \kityminder-core\src\theme\catalogue.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -9221,10 +9221,11 @@ _p[77] = {
             "knp-space": 5,
             "knp-selected-background": "#DEEAFF",
             "sub-color": "#333333",
-            "sub-background": "#F0F2F5",
-            "sub-stroke": "none",
+            "sub-background": "#FFF",
+            "sub-stroke": "#BACEF5",
+            "sub-selected-stroke": "#BACEF5",
             "sub-font-size": 14,
-            "sub-padding": [ 5, 10 ],
+            "sub-padding": [ 6, 10 ],
             "sub-margin": [ 5, 0, 0, 0 ],
             "sub-tree-margin": 1,
             "sub-radius": 6,
