@@ -3851,13 +3851,14 @@ _p[35] = {
         _p.r(40);
         _p.r(42);
         _p.r(37);
-        _p.r(78);
+        _p.r(79);
+        _p.r(82);
         _p.r(81);
         _p.r(80);
-        _p.r(79);
-        _p.r(81);
-        _p.r(83);
         _p.r(82);
+        _p.r(84);
+        _p.r(83);
+        _p.r(78);
         _p.r(77);
         _p.r(0);
         _p.r(1);
@@ -9171,11 +9172,19 @@ _p[76] = {
     }
 };
 
-//src/theme/catalogue.js
+//src/theme/catalogue-edit.js
+/*
+ * @Author: liujinlei liujinlei@zhihuiliu.com
+ * @Date: 2022-11-28 11:38:18
+ * @LastEditors: liujinlei liujinlei@zhihuiliu.com
+ * @LastEditTime: 2022-12-14 17:44:19
+ * @FilePath: \kityminder-core\src\theme\catalogue.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 _p[77] = {
     value: function(require, exports, module) {
         const theme = _p.r(32);
-        theme.register("catalogue", {
+        theme.register("catalogue-edit", {
             background: "#fff",
             "root-color": "#FFF",
             "root-background": "#417FF9",
@@ -9184,6 +9193,8 @@ _p[77] = {
             "root-padding": [ 12, 21 ],
             "root-radius": 6,
             "root-space": 10,
+            "root-selected-background": "#417FF9",
+            "root-selected-color": "#FFF",
             "main-color": "#333333",
             "main-background": "#F0F2F5",
             "main-stroke": "none ",
@@ -9196,7 +9207,7 @@ _p[77] = {
             "grp-background": "#DEEAFF",
             "grp-stroke": "none ",
             "grp-font-size": 14,
-            "grp-padding": [ 6, 20 ],
+            "grp-padding": [ 9, 12 ],
             "grp-margin": [ 8, 0, 0, 0 ],
             "grp-radius": 6,
             "grp-space": 5,
@@ -9204,19 +9215,11 @@ _p[77] = {
             "knp-background": "#DEEAFF",
             "knp-stroke": "none ",
             "knp-font-size": 14,
-            "knp-padding": [ 6, 20 ],
+            "knp-padding": [ 9, 12 ],
             "knp-margin": [ 8, 0, 0, 0 ],
             "knp-radius": 6,
             "knp-space": 5,
-            "sub-color": "#333333",
-            "sub-background": "#F0F2F5",
-            "sub-stroke": "none",
-            "sub-font-size": 14,
-            "sub-padding": [ 5, 10 ],
-            "sub-margin": [ 5, 0, 0, 0 ],
-            "sub-tree-margin": 1,
-            "sub-radius": 6,
-            "sub-space": 5,
+            "knp-selected-background": "#DEEAFF",
             "sub-color": "#333333",
             "sub-background": "#F0F2F5",
             "sub-stroke": "none",
@@ -9231,7 +9234,87 @@ _p[77] = {
             "main-connect-width": 1,
             "connect-radius": 1,
             "selected-background": "none",
-            "selected-stroke": "#2FBDFF",
+            "selected-stroke": "#42D9D4",
+            "selected-color": "black",
+            "marquee-background": "rgba(255,255,255,.3)",
+            "marquee-stroke": "white",
+            "drop-hint-color": "yellow",
+            "sub-drop-hint-width": 2,
+            "main-drop-hint-width": 4,
+            "root-drop-hint-width": 4,
+            "order-hint-area-color": "rgba(0, 255, 0, .5)",
+            "order-hint-path-color": "#0f0",
+            "order-hint-path-width": 1,
+            "text-selection-color": "rgb(27,171,255)",
+            "line-height": 1.5
+        });
+    }
+};
+
+//src/theme/catalogue-view.js
+/*
+ * @Author: liujinlei liujinlei@zhihuiliu.com
+ * @Date: 2022-11-28 11:38:18
+ * @LastEditors: liujinlei liujinlei@zhihuiliu.com
+ * @LastEditTime: 2022-12-14 17:49:24
+ * @FilePath: \kityminder-core\src\theme\catalogue.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+_p[78] = {
+    value: function(require, exports, module) {
+        const theme = _p.r(32);
+        theme.register("catalogue-view", {
+            background: "#fff",
+            "root-color": "#FFF",
+            "root-background": "#417FF9",
+            "root-stroke": "none",
+            "root-font-size": 16,
+            "root-padding": [ 12, 21 ],
+            "root-radius": 6,
+            "root-space": 10,
+            "root-selected-background": "#417FF9",
+            "root-selected-color": "#FFF",
+            "main-color": "#333333",
+            "main-background": "#F0F2F5",
+            "main-stroke": "none ",
+            "main-font-size": 14,
+            "main-padding": [ 6, 20 ],
+            "main-margin": [ 8, 0, 0, 0 ],
+            "main-radius": 6,
+            "main-space": 5,
+            "grp-color": "#333333",
+            "grp-background": "#DEEAFF",
+            "grp-stroke": "none ",
+            "grp-font-size": 14,
+            "grp-padding": [ 9, 12 ],
+            "grp-margin": [ 8, 0, 0, 0 ],
+            "grp-radius": 6,
+            "grp-space": 5,
+            "knp-color": "#333333",
+            "knp-background": "#DEEAFF",
+            "knp-stroke": "none ",
+            "knp-font-size": 14,
+            "knp-padding": [ 9, 12 ],
+            "knp-margin": [ 8, 0, 0, 0 ],
+            "knp-radius": 6,
+            "knp-space": 5,
+            "knp-selected-background": "#DEEAFF",
+            "sub-color": "#333333",
+            "sub-background": "#FFF",
+            "sub-stroke": "#BACEF5",
+            "sub-selected-stroke": "#BACEF5",
+            "sub-font-size": 14,
+            "sub-padding": [ 6, 10 ],
+            "sub-margin": [ 5, 0, 0, 0 ],
+            "sub-tree-margin": 1,
+            "sub-radius": 6,
+            "sub-space": 5,
+            "connect-color": "#417FF9",
+            "connect-width": 1,
+            "main-connect-width": 1,
+            "connect-radius": 1,
+            "selected-background": "none",
+            "selected-stroke": "none",
             "selected-color": "black",
             "marquee-background": "rgba(255,255,255,.3)",
             "marquee-stroke": "white",
@@ -9249,7 +9332,7 @@ _p[77] = {
 };
 
 //src/theme/default.js
-_p[78] = {
+_p[79] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         [ "classic", "classic-compact" ].forEach(function(name) {
@@ -9308,7 +9391,7 @@ _p[78] = {
 };
 
 //src/theme/fish.js
-_p[79] = {
+_p[80] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         theme.register("fish", {
@@ -9359,7 +9442,7 @@ _p[79] = {
 };
 
 //src/theme/fresh.js
-_p[80] = {
+_p[81] = {
     value: function(require, exports, module) {
         var kity = _p.r(17);
         var theme = _p.r(32);
@@ -9428,7 +9511,7 @@ _p[80] = {
 };
 
 //src/theme/snow.js
-_p[81] = {
+_p[82] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         [ "snow", "snow-compact" ].forEach(function(name) {
@@ -9483,7 +9566,7 @@ _p[81] = {
 };
 
 //src/theme/tianpan.js
-_p[82] = {
+_p[83] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         [ "tianpan", "tianpan-compact" ].forEach(function(name) {
@@ -9545,7 +9628,7 @@ _p[82] = {
 };
 
 //src/theme/wire.js
-_p[83] = {
+_p[84] = {
     value: function(require, exports, module) {
         var theme = _p.r(32);
         theme.register("wire", {

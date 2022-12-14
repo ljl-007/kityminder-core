@@ -87,7 +87,8 @@ define(function(require, exports, module) {
     require('./theme/snow');
     require('./theme/wire');
     require('./theme/tianpan');
-    require('./theme/catalogue');
+    require('./theme/catalogue-view');
+    require('./theme/catalogue-edit');
 
     require('./connect/arc');
     require('./connect/arc_tp');

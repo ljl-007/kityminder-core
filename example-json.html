@@ -2,7 +2,7 @@
  * @Author: liujinlei liujinlei@zhihuiliu.com
  * @Date: 2022-11-16 17:49:34
  * @LastEditors: liujinlei liujinlei@zhihuiliu.com
- * @LastEditTime: 2022-12-12 11:28:48
+ * @LastEditTime: 2022-12-14 17:45:48
  * @FilePath: \kityminder-core\example.html
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -73,7 +73,7 @@
         { data: { text: '视频', type:1 } },
         { data: { text: '地图', type:1 } },
         { data: { text: '百科', type:1 } },
-        { data: { text: ['测试数据','【知】角的基础知识','【知】有具体量的工程问题：'],type:1} }
+        { data: { text: ['测试数据','【知】角的基础知识','【知】有具体量的工程问题：'],type:3} }
       ]
     }
     define('start', function (require) {
@@ -85,7 +85,7 @@
       km.importJson({
         root: data,
         template: 'catalogue',
-        theme: 'catalogue'
+        theme: 'catalogue-view'
       })
     })
     seajs.use('start')
