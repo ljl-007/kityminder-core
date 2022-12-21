@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2022-12-14
+ * Kity Minder Core - v1.4.50 - 2022-12-21
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
  * Copyright (c) 2022 Baidu FEX; Licensed BSD-3-Clause
@@ -7551,6 +7551,22 @@ _p[62] = {
                     textGroup.eachItem(function(i, textShape) {
                         var y = yStart + i * fontSize * lineHeight;
                         textShape.setY(y);
+                        if (textShape.items && textShape.items.length) {
+                            var s_x = 0, count = 0, V_K = 2, V_X = 13;
+                            for (var n = 0; n < textShape.items.length; n++) {
+                                const item = textShape.items[n];
+                                s_x += item.getWidth();
+                                if (count === 1) {
+                                    s_x += V_K;
+                                    item.setAttr("x", s_x - item.getWidth());
+                                } else if (count === 2) {
+                                    count = 0;
+                                    s_x += V_X;
+                                    item.setAttr("x", s_x - item.getWidth());
+                                }
+                                count++;
+                            }
+                        }
                         var bbox = textShape.getBoundaryBox();
                         rBox = rBox.merge(new kity.Box(0, y, bbox.height && bbox.width || 1, fontSize));
                     });

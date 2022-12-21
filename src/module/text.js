@@ -240,8 +240,23 @@ define(function(require, exports, module) {
             return function() {
                 textGroup.eachItem(function(i, textShape) {
                     var y = yStart + i * fontSize * lineHeight;
-
                     textShape.setY(y);
+                    if(textShape.items && textShape.items.length){
+                        var s_x = 0,count = 0,V_K = 2, V_X = 13
+                        for (var n = 0; n < textShape.items.length; n++) {
+                          const item = textShape.items[n];
+                          s_x += item.getWidth()
+                          if(count === 1){
+                            s_x += V_K
+                            item.setAttr('x',s_x - item.getWidth())
+                          }else if(count === 2){
+                            count = 0
+                            s_x += V_X
+                            item.setAttr('x',s_x - item.getWidth())
+                          }
+                          count ++
+                        }
+                      }
                     var bbox = textShape.getBoundaryBox();
                     rBox = rBox.merge(new kity.Box(0, y, bbox.height && bbox.width || 1, fontSize));
                 });
