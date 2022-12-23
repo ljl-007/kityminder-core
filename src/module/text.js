@@ -209,7 +209,7 @@ define(function(require, exports, module) {
                             for (var t = 0; t < text_group.length; t++) {
                                 const e = text_group[t];
                                 this.addSpan(new kity.TextSpan(e.text_key).fill(e.text_key_color || ''))
-                                this.addSpan(new kity.TextSpan(e.text_value).fill(e.text_value_color || ''))
+                                this.addSpan(new kity.TextSpan(e.text_value).fill(e.text_value_color || '').setFontBold(600))
                             }
                         })
                     }

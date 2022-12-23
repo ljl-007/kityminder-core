@@ -59,7 +59,7 @@ define(function (require, exports, module) {
     'sub-selected-stroke-width':2,
     'sub-font-size': 14,
     'sub-padding': [6, 10],
-    'sub-margin': [5, 0, 0, 0],
+    'sub-margin': [8, 0, 0, 0],
     'sub-tree-margin': 1,
     'sub-radius': 6,
     'sub-space': 5,
