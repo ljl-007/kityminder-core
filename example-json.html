@@ -64,14 +64,14 @@
         imageSize: { width: 270, height: 129 }
       },
       children: [
-        { data: { text: ['调试','自知则知之'],type:1 } },
-        { data: { text: ['【题】 1.树木丛生（ ）',{text_group:[{text_key:'正确人数',text_value:20,text_key_color:'green',text_value_color:'red'},{text_key:'正确率',text_value:'75%',text_key_color:'green',text_value_color:'red'}]}], type:1 } },
+        { data: { text: ['调试','自知则知之'],type:1 ,'font-family':'宋体'} },
+        { data: { text: ['【题】 1.树木丛生（ ）',{text_group:[{text_key:'正确人数',text_value:20,text_key_color:'green',text_value_color:'red'},{text_key:'正确率',text_value:'75%',text_key_color:'green',text_value_color:'red'}]}], type:1 , 'font-family':'宋体'} },
         { data: { text: '贴吧', type:1 ,color:'red'} },
-        { data: { text: '知道', type:1 } },
+        { data: { text: '知道', type:1 ,'font-family':'宋体'} },
         { data: { text: '音乐', type:1 } },
         { data: { text: '图片', hyperlink:'http://www.baidu.com/more',type:1 } },
-        { data: { text: '视频', type:1 } },
-        { data: { text: '地图', type:1 } },
+        { data: { text: '视频', type:3 } },
+        { data: { text: '地图', type:3 } },
         { data: { text: '百科', type:1 } },
         { data: { text: ['测试数据','【知】角的基础知识','【知】有具体量的工程问题：'],type:3} }
       ]
@@ -85,7 +85,7 @@
       km.importJson({
         root: data,
         template: 'catalogue',
-        theme: 'catalogue-view'
+        theme: 'catalogue-edit'
       })
       console.log(km)
     })

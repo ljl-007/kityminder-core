@@ -10,7 +10,7 @@ define(function(require, exports, module) {
 
             doLayout: function(parent, children, round) {
                 var pBox = parent.getContentBox();
-                var indent = 40
+                var indent = 16
                 
                 parent.setVertexOut(new kity.Point(pBox.cx, pBox['bottom']));
                 parent.setLayoutVectorOut(new kity.Vector(0, 1));

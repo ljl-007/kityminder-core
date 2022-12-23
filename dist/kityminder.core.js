@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2022-12-21
+ * Kity Minder Core - v1.4.50 - 2022-12-23
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
  * Copyright (c) 2022 Baidu FEX; Licensed BSD-3-Clause
@@ -4013,7 +4013,7 @@ _p[37] = {
                 base: Layout,
                 doLayout: function(parent, children, round) {
                     var pBox = parent.getContentBox();
-                    var indent = 40;
+                    var indent = 16;
                     parent.setVertexOut(new kity.Point(pBox.cx, pBox["bottom"]));
                     parent.setLayoutVectorOut(new kity.Vector(0, 1));
                     if (!children.length) return;
@@ -9207,6 +9207,7 @@ _p[77] = {
             "root-stroke": "none",
             "root-font-size": 16,
             "root-padding": [ 12, 21 ],
+            "root-margin": [ 0, 0, 2, 0 ],
             "root-radius": 6,
             "root-space": 10,
             "root-selected-background": "#417FF9",
@@ -9239,7 +9240,9 @@ _p[77] = {
             "sub-color": "#333333",
             "sub-background": "#FFF",
             "sub-stroke": "#BACEF5",
+            "sub-stroke-width": 1,
             "sub-selected-stroke": "#BACEF5",
+            "sub-selected-stroke-width": 2,
             "sub-font-size": 14,
             "sub-padding": [ 6, 10 ],
             "sub-margin": [ 5, 0, 0, 0 ],
@@ -9252,6 +9255,7 @@ _p[77] = {
             "connect-radius": 1,
             "selected-background": "none",
             "selected-stroke": "#42D9D4",
+            "selected-stroke-width": 2,
             "selected-color": "black",
             "marquee-background": "rgba(255,255,255,.3)",
             "marquee-stroke": "white",
@@ -9287,6 +9291,7 @@ _p[78] = {
             "root-stroke": "none",
             "root-font-size": 16,
             "root-padding": [ 12, 21 ],
+            "root-margin": [ 0, 0, 2, 0 ],
             "root-radius": 6,
             "root-space": 10,
             "root-selected-background": "#417FF9",

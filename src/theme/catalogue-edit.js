@@ -16,6 +16,7 @@ define(function (require, exports, module) {
     'root-stroke': 'none',
     'root-font-size': 16,
     'root-padding': [12, 21],
+    'root-margin': [0, 0, 2, 0],
     'root-radius': 6,
     'root-space': 10,
     'root-selected-background':'#417FF9',
@@ -53,7 +54,9 @@ define(function (require, exports, module) {
     'sub-color': '#333333',
     'sub-background': '#FFF',
     'sub-stroke': '#BACEF5',
+    'sub-stroke-width': 1,
     'sub-selected-stroke': '#BACEF5',
+    'sub-selected-stroke-width':2,
     'sub-font-size': 14,
     'sub-padding': [6, 10],
     'sub-margin': [5, 0, 0, 0],
@@ -68,6 +71,7 @@ define(function (require, exports, module) {
 
     'selected-background': 'none',
     'selected-stroke': '#42D9D4',
+    'selected-stroke-width': 2,
     'selected-color': 'black',
 
     'marquee-background': 'rgba(255,255,255,.3)',

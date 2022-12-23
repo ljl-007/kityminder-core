@@ -16,6 +16,7 @@ define(function (require, exports, module) {
     'root-stroke': 'none',
     'root-font-size': 16,
     'root-padding': [12, 21],
+    'root-margin': [0, 0, 2, 0],
     'root-radius': 6,
     'root-space': 10,
     'root-selected-background':'#417FF9',
