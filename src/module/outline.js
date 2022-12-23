@@ -12,12 +12,10 @@ define(function(require, exports, module) {
         base: Renderer,
 
         create: function(node) {
-
             var outline = new kity.Rect()
                 .setId(utils.uuid('node_outline'));
-
             this.bringToBack = true;
-
+            
             return outline;
         },
 

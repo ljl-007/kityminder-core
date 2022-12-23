@@ -61,7 +61,8 @@
     const data = {
       data: {
         text: '百度产品',
-        imageSize: { width: 270, height: 129 }
+        imageSize: { width: 270, height: 129 },
+        type:0
       },
       children: [
         { data: { text: ['调试','自知则知之'],type:1 ,'font-family':'宋体'} },
@@ -79,6 +80,26 @@
     define('start', function (require) {
       var Minder = require('kityminder').Minder
       var km = (window.km = new Minder())
+      let outLine = null,background = null
+      const ROOT_HOVER_BACKGROUND = '#376CD3'
+      const KN_HOVER_BACKGROUND = '#C9DCFF'
+      const SUB_HOVER_BACKGROUND = '#EBF2FF'
+      const hoverBackground = {
+        0:ROOT_HOVER_BACKGROUND,
+        1:KN_HOVER_BACKGROUND,
+        3:SUB_HOVER_BACKGROUND
+      }
+      km.on('mouseover',e =>{
+        const node = e.getTargetNode()
+        if(node){
+          const {rc}= node
+          background = node.getStyle('background')
+          outLine = rc.getItems().find(f => f.__KityClassName === 'Rect')
+          outLine && outLine.fill(node.getStyle('hover-background'))
+        }else{
+          outLine && outLine.fill(background)
+        }
+      })
       // 创建 km 实例
       /* global kityminder */
       km.renderTo('.mind')
@@ -90,7 +111,6 @@
       console.log(km)
     })
     seajs.use('start')
-    km.disable();
     
   </script>
 </html>
