@@ -155,7 +155,6 @@ define(function(require, exports, module) {
             .on('hand.beforemousemove hand.beforetouchmove', function(e) {
                 if (lastPosition) {
                     currentPosition = e.getPosition('view');
-
                     // 当前偏移加上历史偏移
                     var offset = kity.Vector.fromPoints(lastPosition, currentPosition);
                     dragger.move(offset);
@@ -277,6 +276,7 @@ define(function(require, exports, module) {
                     this._viewDragger.setEnabled(e.currentStatus == 'hand');
                 },
                 mousewheel: function(e) {
+                    return false
                     var dx, dy;
                     e = e.originEvent;
                     if (e.ctrlKey || e.shiftKey) return;

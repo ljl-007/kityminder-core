@@ -21,6 +21,7 @@ define(function (require, exports, module) {
     'root-space': 10,
     'root-selected-background':'#417FF9',
     'root-selected-color': '#FFF',
+    'root-hover-background':'#376CD3',
 
     'main-color': '#333333',
     'main-background': '#F0F2F5',
@@ -50,6 +51,7 @@ define(function (require, exports, module) {
     'knp-radius': 6,
     'knp-space': 5,
     'knp-selected-background':'#DEEAFF',
+    'knp-hover-background':'#C9DCFF',
 
     'sub-color': '#333333',
     'sub-background': '#FFF',
@@ -61,6 +63,7 @@ define(function (require, exports, module) {
     'sub-tree-margin': 1,
     'sub-radius': 6,
     'sub-space': 5,
+    'sub-hover-background':'#EBF2FF',
 
     'connect-color': '#417FF9',
     'connect-width': 1,

@@ -161,6 +161,7 @@ define(function(require, exports, module) {
             },
             events: {
                 'normal.mousewheel readonly.mousewheel': function(e) {
+                    return false
                     if (!e.originEvent.ctrlKey && !e.originEvent.metaKey) return;
 
                     var delta = e.originEvent.wheelDelta;

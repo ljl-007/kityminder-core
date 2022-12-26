@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2022-12-23
+ * Kity Minder Core - v1.4.50 - 2022-12-26
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
  * Copyright (c) 2022 Baidu FEX; Licensed BSD-3-Clause
@@ -7847,6 +7847,7 @@ _p[63] = {
                         this._viewDragger.setEnabled(e.currentStatus == "hand");
                     },
                     mousewheel: function(e) {
+                        return false;
                         var dx, dy;
                         e = e.originEvent;
                         if (e.ctrlKey || e.shiftKey) return;
@@ -8090,6 +8091,7 @@ _p[64] = {
                 },
                 events: {
                     "normal.mousewheel readonly.mousewheel": function(e) {
+                        return false;
                         if (!e.originEvent.ctrlKey && !e.originEvent.metaKey) return;
                         var delta = e.originEvent.wheelDelta;
                         var me = this;
@@ -9299,6 +9301,7 @@ _p[78] = {
             "root-space": 10,
             "root-selected-background": "#417FF9",
             "root-selected-color": "#FFF",
+            "root-hover-background": "#376CD3",
             "main-color": "#333333",
             "main-background": "#F0F2F5",
             "main-stroke": "none ",
@@ -9324,6 +9327,7 @@ _p[78] = {
             "knp-radius": 6,
             "knp-space": 5,
             "knp-selected-background": "#DEEAFF",
+            "knp-hover-background": "#C9DCFF",
             "sub-color": "#333333",
             "sub-background": "#FFF",
             "sub-stroke": "#BACEF5",
@@ -9334,6 +9338,7 @@ _p[78] = {
             "sub-tree-margin": 1,
             "sub-radius": 6,
             "sub-space": 5,
+            "sub-hover-background": "#EBF2FF",
             "connect-color": "#417FF9",
             "connect-width": 1,
             "main-connect-width": 1,
