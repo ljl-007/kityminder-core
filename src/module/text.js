@@ -204,14 +204,37 @@ define(function(require, exports, module) {
                     if (utils.isString(textArr[growth])) {
                         textShape.setContent(textArr[growth])
                     } else {
-                        textShape = textShape.pipe(function () {
-                            var text_group = textArr[growth]? textArr[growth].text_group:[]
-                            for (var t = 0; t < text_group.length; t++) {
-                                const e = text_group[t];
-                                this.addSpan(new kity.TextSpan(e.text_key).fill(e.text_key_color || ''))
-                                this.addSpan(new kity.TextSpan(e.text_value).fill(e.text_value_color || '').setFontBold(600))
-                            }
-                        })
+                        // 方式 一
+                        // textShape = textShape.pipe(function () {
+                        //     var text_group = textArr[growth]? textArr[growth].text_group:[]
+                        //     for (var t = 0; t < text_group.length; t++) {
+                        //         const e = text_group[t];
+                        //         this.addSpan(new kity.TextSpan(e.text_key).fill(e.text_key_color || ''))
+                        //         this.addSpan(new kity.TextSpan(e.text_value).fill(e.text_value_color || '').setFontBold(600))
+                        //     }
+                        // })
+                        
+                        // 方式二
+                        var text_group = textArr[growth]? textArr[growth].text_group:[]
+                        var p = document.createElement('p')
+                        for (var t = 0; t < text_group.length; t++) {
+                            var e = text_group[t];
+                            var span = document.createElement('span')
+                            span.innerHTML = e.text_key
+                            p.appendChild(span)
+                        }
+                        var size = this.fitFormulaSize(p.innerHTML);
+                        var spaceTop = node.getStyle("space-top");
+                        if (!size) return;
+                        var x = 0;
+                        var y = size.height - spaceTop;
+                        // size.width > 300 && (size.width = 300)
+                        textShape = new kity.Formula()
+                                        .setUrl(p.innerHTML)
+                                        .setX(x | 0)
+                                        .setY(y | 0)
+                                        .setWidth(size.width | 0)
+                                        .setHeight(size.height | 0);
                     }
                     textGroup.addItem(textShape)
                     growth++
@@ -238,27 +261,37 @@ define(function(require, exports, module) {
             node._currentTextHash = textHash;
 
             return function() {
+                var y = yStart + i * fontSize * lineHeight;
                 textGroup.eachItem(function(i, textShape) {
-                    var y = yStart + i * fontSize * lineHeight;
+                    // old
+                    // var y = yStart + i * fontSize * lineHeight;
+                    // new
+                    if(i){
+                        y += textShape.getHeight();
+                    };
                     textShape.setY(y);
-                    if(textShape.items && textShape.items.length){
-                        var s_x = 0,count = 0,V_K = 2, V_X = 13
-                        for (var n = 0; n < textShape.items.length; n++) {
-                          const item = textShape.items[n];
-                          s_x += item.getWidth()
-                          if(count === 1){
-                            s_x += V_K
-                            item.setAttr('x',s_x - item.getWidth())
-                          }else if(count === 2){
-                            count = 0
-                            s_x += V_X
-                            item.setAttr('x',s_x - item.getWidth())
-                          }
-                          count ++
-                        }
-                      }
+
+                    // if(textShape.items && textShape.items.length){
+                    //     var s_x = 0,count = 0,V_K = 2, V_X = 13
+                    //     for (var n = 0; n < textShape.items.length; n++) {
+                    //       const item = textShape.items[n];
+                    //       s_x += item.getWidth()
+                    //       if(count === 1){
+                    //         s_x += V_K
+                    //         item.setAttr('x',s_x - item.getWidth())
+                    //       }else if(count === 2){
+                    //         count = 0
+                    //         s_x += V_X
+                    //         item.setAttr('x',s_x - item.getWidth())
+                    //       }
+                    //       count ++
+                    //     }
+                    // }
                     var bbox = textShape.getBoundaryBox();
-                    rBox = rBox.merge(new kity.Box(0, y, bbox.height && bbox.width || 1, fontSize));
+                    // old
+                    // rBox = rBox.merge(new kity.Box(0, y, bbox.height && bbox.width || 1, fontSize));
+                    // new
+                    rBox = rBox.merge(new kity.Box(0, y, bbox.height && bbox.width || 1, Math.max(fontSize, textShape.getHeight() - 4)));
                 });
 
                 var nBox = new kity.Box(r(rBox.x), r(rBox.y), r(rBox.width), r(rBox.height));
@@ -274,6 +307,29 @@ define(function(require, exports, module) {
             hooks.forEach(function(hook) {
                 hook(node, text);
             });
+        },
+
+        fitFormulaSize: function(str) {
+            var width = 0, height = 0;
+            var div = document.createElement('div')
+            div.innerHTML = str
+            div.style.position = 'absolute'
+            div.style.zIndex = "999"
+            div.style.fontSize = '14px'
+            // div.style.maxWidth = '300px'
+            div.style.display = '-webkit-box'
+            div.style.overflow = 'hidden'
+            div.style.textOverflow = 'ellipsis'
+            div.style['-webkit-box-orient'] = 'vertical'
+            div.style['-webkit-line-clamp'] = 2
+            document.body.appendChild(div)
+            width = parseFloat(getComputedStyle(div).width) + 1
+            height = parseFloat(getComputedStyle(div).height)
+            div.remove()
+            return {
+                width: width,
+                height: height
+            }
         }
     });
 

@@ -25,7 +25,7 @@ define(function(require, exports, module) {
         textGroup.fill(foreColor);
 
         textGroup.eachItem(function(index, item) {
-            item.setFont({
+            item.setFont && item.setFont({
                 'family': fontFamily,
                 'size': fontSize
             });

@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2022-12-26
+ * Kity Minder Core - v1.4.50 - 2022-12-27
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
  * Copyright (c) 2022 Baidu FEX; Licensed BSD-3-Clause
@@ -4543,7 +4543,7 @@ _p[44] = {
                 var fontStyle = getNodeDataOrStyle(node, "font-style");
                 var styleHash = [ fontWeight, fontStyle ].join("/");
                 textGroup.eachItem(function(index, item) {
-                    item.setFont({
+                    item.setFont && item.setFont({
                         weight: fontWeight,
                         style: fontStyle
                     });
@@ -5094,31 +5094,20 @@ _p[46] = {
             return {
                 init: function() {
                     dragger = new TreeDragger(this);
-                    window.addEventListener("mouseup", function() {
-                        dragger.dragEnd();
-                    });
+                    window.addEventListener("mouseup", function() {});
                 },
                 events: {
                     "normal.mousedown inputready.mousedown": function(e) {
                         // 单选中根节点也不触发拖拽
                         if (e.originEvent.button) return;
-                        if (e.getTargetNode() && e.getTargetNode() != this.getRoot()) {
-                            dragger.dragStart(e.getPosition());
-                        }
                     },
-                    "normal.mousemove dragtree.mousemove": function(e) {
-                        dragger.dragMove(e.getPosition());
-                    },
+                    "normal.mousemove dragtree.mousemove": function(e) {},
                     "normal.mouseup dragtree.beforemouseup": function(e) {
-                        dragger.dragEnd();
+                        // dragger.dragEnd();
                         //e.stopPropagation();
                         e.preventDefault();
                     },
-                    statuschange: function(e) {
-                        if (e.lastStatus == "textedit" && e.currentStatus == "normal") {
-                            dragger.preventDragMove();
-                        }
-                    }
+                    statuschange: function(e) {}
                 },
                 commands: {
                     movetoparent: MoveToParentCommand
@@ -5416,7 +5405,7 @@ _p[48] = {
             var fontSize = getNodeDataOrStyle(node, "font-size");
             textGroup.fill(foreColor);
             textGroup.eachItem(function(index, item) {
-                item.setFont({
+                item.setFont && item.setFont({
                     family: fontFamily,
                     size: fontSize
                 });
@@ -7522,14 +7511,31 @@ _p[62] = {
                         if (utils.isString(textArr[growth])) {
                             textShape.setContent(textArr[growth]);
                         } else {
-                            textShape = textShape.pipe(function() {
-                                var text_group = textArr[growth] ? textArr[growth].text_group : [];
-                                for (var t = 0; t < text_group.length; t++) {
-                                    const e = text_group[t];
-                                    this.addSpan(new kity.TextSpan(e.text_key).fill(e.text_key_color || ""));
-                                    this.addSpan(new kity.TextSpan(e.text_value).fill(e.text_value_color || "").setFontBold(600));
-                                }
-                            });
+                            // 方式 一
+                            // textShape = textShape.pipe(function () {
+                            //     var text_group = textArr[growth]? textArr[growth].text_group:[]
+                            //     for (var t = 0; t < text_group.length; t++) {
+                            //         const e = text_group[t];
+                            //         this.addSpan(new kity.TextSpan(e.text_key).fill(e.text_key_color || ''))
+                            //         this.addSpan(new kity.TextSpan(e.text_value).fill(e.text_value_color || '').setFontBold(600))
+                            //     }
+                            // })
+                            // 方式二
+                            var text_group = textArr[growth] ? textArr[growth].text_group : [];
+                            var p = document.createElement("p");
+                            for (var t = 0; t < text_group.length; t++) {
+                                var e = text_group[t];
+                                var span = document.createElement("span");
+                                span.innerHTML = e.text_key;
+                                p.appendChild(span);
+                            }
+                            var size = this.fitFormulaSize(p.innerHTML);
+                            var spaceTop = node.getStyle("space-top");
+                            if (!size) return;
+                            var x = 0;
+                            var y = size.height - spaceTop;
+                            // size.width > 300 && (size.width = 300)
+                            textShape = new kity.Formula().setUrl(p.innerHTML).setX(x | 0).setY(y | 0).setWidth(size.width | 0).setHeight(size.height | 0);
                         }
                         textGroup.addItem(textShape);
                         growth++;
@@ -7548,27 +7554,36 @@ _p[62] = {
                 if (node._currentTextHash == textHash && node._currentTextGroupBox) return node._currentTextGroupBox;
                 node._currentTextHash = textHash;
                 return function() {
+                    var y = yStart + i * fontSize * lineHeight;
                     textGroup.eachItem(function(i, textShape) {
-                        var y = yStart + i * fontSize * lineHeight;
-                        textShape.setY(y);
-                        if (textShape.items && textShape.items.length) {
-                            var s_x = 0, count = 0, V_K = 2, V_X = 13;
-                            for (var n = 0; n < textShape.items.length; n++) {
-                                const item = textShape.items[n];
-                                s_x += item.getWidth();
-                                if (count === 1) {
-                                    s_x += V_K;
-                                    item.setAttr("x", s_x - item.getWidth());
-                                } else if (count === 2) {
-                                    count = 0;
-                                    s_x += V_X;
-                                    item.setAttr("x", s_x - item.getWidth());
-                                }
-                                count++;
-                            }
+                        // old
+                        // var y = yStart + i * fontSize * lineHeight;
+                        // new
+                        if (i) {
+                            y += textShape.getHeight();
                         }
+                        textShape.setY(y);
+                        // if(textShape.items && textShape.items.length){
+                        //     var s_x = 0,count = 0,V_K = 2, V_X = 13
+                        //     for (var n = 0; n < textShape.items.length; n++) {
+                        //       const item = textShape.items[n];
+                        //       s_x += item.getWidth()
+                        //       if(count === 1){
+                        //         s_x += V_K
+                        //         item.setAttr('x',s_x - item.getWidth())
+                        //       }else if(count === 2){
+                        //         count = 0
+                        //         s_x += V_X
+                        //         item.setAttr('x',s_x - item.getWidth())
+                        //       }
+                        //       count ++
+                        //     }
+                        // }
                         var bbox = textShape.getBoundaryBox();
-                        rBox = rBox.merge(new kity.Box(0, y, bbox.height && bbox.width || 1, fontSize));
+                        // old
+                        // rBox = rBox.merge(new kity.Box(0, y, bbox.height && bbox.width || 1, fontSize));
+                        // new
+                        rBox = rBox.merge(new kity.Box(0, y, bbox.height && bbox.width || 1, Math.max(fontSize, textShape.getHeight() - 4)));
                     });
                     var nBox = new kity.Box(r(rBox.x), r(rBox.y), r(rBox.width), r(rBox.height));
                     node._currentTextGroupBox = nBox;
@@ -7580,6 +7595,28 @@ _p[62] = {
                 hooks.forEach(function(hook) {
                     hook(node, text);
                 });
+            },
+            fitFormulaSize: function(str) {
+                var width = 0, height = 0;
+                var div = document.createElement("div");
+                div.innerHTML = str;
+                div.style.position = "absolute";
+                div.style.zIndex = "999";
+                div.style.fontSize = "14px";
+                // div.style.maxWidth = '300px'
+                div.style.display = "-webkit-box";
+                div.style.overflow = "hidden";
+                div.style.textOverflow = "ellipsis";
+                div.style["-webkit-box-orient"] = "vertical";
+                div.style["-webkit-line-clamp"] = 2;
+                document.body.appendChild(div);
+                width = parseFloat(getComputedStyle(div).width) + 1;
+                height = parseFloat(getComputedStyle(div).height);
+                div.remove();
+                return {
+                    width: width,
+                    height: height
+                };
             }
         });
         var TextCommand = kity.createClass({
@@ -7657,11 +7694,13 @@ _p[63] = {
                 return this._moveTimeline;
             },
             move: function(offset, duration) {
+                console.log("移动move");
                 var minder = this._minder;
                 var targetPosition = this.getMovement().offset(offset);
                 this.moveTo(targetPosition, duration);
             },
             moveTo: function(position, duration) {
+                console.log("移动moveTo");
                 if (duration) {
                     var dragger = this;
                     if (this._moveTimeline) this._moveTimeline.stop();
@@ -7711,42 +7750,12 @@ _p[63] = {
                     if (e.originEvent.button == 2) {
                         e.originEvent.preventDefault();
                     }
-                    // 点击未选中的根节点临时开启
-                    if (e.getTargetNode() == this.getRoot() || e.originEvent.button == 2 || e.originEvent.altKey) {
-                        lastPosition = e.getPosition("view");
-                        isTempDrag = true;
-                    }
                 }).on("normal.mousemove normal.touchmove " + "readonly.mousemove readonly.touchmove " + "inputready.mousemove inputready.touchmove", function(e) {
                     if (e.type == "touchmove") {
                         e.preventDefault();
                     }
                     if (!isTempDrag) return;
-                    var offset = kity.Vector.fromPoints(lastPosition, e.getPosition("view"));
-                    if (offset.length() > 10) {
-                        this.setStatus("hand", true);
-                        var paper = dragger._minder.getPaper();
-                        paper.setStyle("cursor", "-webkit-grabbing");
-                    }
-                }).on("hand.beforemousedown hand.beforetouchstart", function(e) {
-                    // 已经被用户打开拖放模式
-                    if (dragger.isEnabled()) {
-                        lastPosition = e.getPosition("view");
-                        e.stopPropagation();
-                        var paper = dragger._minder.getPaper();
-                        paper.setStyle("cursor", "-webkit-grabbing");
-                    }
-                }).on("hand.beforemousemove hand.beforetouchmove", function(e) {
-                    if (lastPosition) {
-                        currentPosition = e.getPosition("view");
-                        // 当前偏移加上历史偏移
-                        var offset = kity.Vector.fromPoints(lastPosition, currentPosition);
-                        dragger.move(offset);
-                        e.stopPropagation();
-                        e.preventDefault();
-                        e.originEvent.preventDefault();
-                        lastPosition = currentPosition;
-                    }
-                }).on("mouseup touchend", dragEnd);
+                }).on("hand.beforemousedown hand.beforetouchstart", function(e) {}).on("hand.beforemousemove hand.beforetouchmove", function(e) {}).on("mouseup touchend", dragEnd);
                 window.addEventListener("mouseup", dragEnd);
                 this._minder.on("contextmenu", function(e) {
                     e.preventDefault();
@@ -7893,6 +7902,7 @@ _p[63] = {
                         this._lastClientSize = a;
                     },
                     "selectionchange layoutallfinish": function(e) {
+                        if (e.type === "selectionchange") return;
                         var selected = this.getSelectedNode();
                         var minder = this;
                         /*
@@ -9245,7 +9255,6 @@ _p[77] = {
             "sub-background": "#FFF",
             "sub-stroke": "#BACEF5",
             "sub-stroke-width": 1,
-            "sub-selected-stroke": "#BACEF5",
             "sub-selected-stroke-width": 2,
             "sub-font-size": 14,
             "sub-padding": [ 6, 10 ],

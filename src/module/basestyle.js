@@ -24,7 +24,7 @@ define(function(require, exports, module) {
             var styleHash = [fontWeight, fontStyle].join('/');
 
             textGroup.eachItem(function(index,item) {
-                item.setFont({
+                item.setFont && item.setFont({
                     'weight': fontWeight,
                     'style': fontStyle
                 });

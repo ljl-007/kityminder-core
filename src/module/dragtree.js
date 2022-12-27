@@ -372,29 +372,29 @@ define(function(require, exports, module) {
             init: function() {
                 dragger = new TreeDragger(this);
                 window.addEventListener('mouseup', function() {
-                    dragger.dragEnd();
+                    // dragger.dragEnd();
                 });
             },
             events: {
                 'normal.mousedown inputready.mousedown': function(e) {
                     // 单选中根节点也不触发拖拽
                     if (e.originEvent.button) return;
-                    if (e.getTargetNode() && e.getTargetNode() != this.getRoot()) {
-                        dragger.dragStart(e.getPosition());
-                    }
+                    // if (e.getTargetNode() && e.getTargetNode() != this.getRoot()) {
+                    //     dragger.dragStart(e.getPosition());
+                    // }
                 },
                 'normal.mousemove dragtree.mousemove': function(e) {
-                    dragger.dragMove(e.getPosition());
+                    // dragger.dragMove(e.getPosition());
                 },
                 'normal.mouseup dragtree.beforemouseup': function(e) {
-                    dragger.dragEnd();
+                    // dragger.dragEnd();
                     //e.stopPropagation();
                     e.preventDefault();
                 },
                 'statuschange': function(e) {
-                    if (e.lastStatus == 'textedit' && e.currentStatus == 'normal') {
-                        dragger.preventDragMove();
-                    }
+                    // if (e.lastStatus == 'textedit' && e.currentStatus == 'normal') {
+                    //     dragger.preventDragMove();
+                    // }
                 }
             },
             commands: {

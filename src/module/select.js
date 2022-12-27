@@ -118,7 +118,6 @@ define(function(require, exports, module) {
             },
             'events': {
                 'mousedown': function(e) {
-
                     var downNode = e.getTargetNode();
 
                     // 没有点中节点：

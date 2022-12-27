@@ -35,6 +35,7 @@ define(function(require, exports, module) {
         },
 
         move: function(offset, duration) {
+            console.log('移动move')
             var minder = this._minder;
 
             var targetPosition = this.getMovement().offset(offset);
@@ -43,7 +44,7 @@ define(function(require, exports, module) {
         },
 
         moveTo: function(position, duration) {
-
+            console.log('移动moveTo')
             if (duration) {
                 var dragger = this;
 
@@ -120,10 +121,10 @@ define(function(require, exports, module) {
                         e.originEvent.preventDefault(); // 阻止中键拉动
                     }
                     // 点击未选中的根节点临时开启
-                    if (e.getTargetNode() == this.getRoot() || e.originEvent.button == 2 || e.originEvent.altKey) {
-                        lastPosition = e.getPosition('view');
-                        isTempDrag = true;
-                    }
+                    // if (e.getTargetNode() == this.getRoot() || e.originEvent.button == 2 || e.originEvent.altKey) {
+                    //     lastPosition = e.getPosition('view');
+                    //     isTempDrag = true;
+                    // }
                 })
 
             .on('normal.mousemove normal.touchmove ' +
@@ -134,35 +135,35 @@ define(function(require, exports, module) {
                         e.preventDefault(); // 阻止浏览器的后退事件
                     }
                     if (!isTempDrag) return;
-                    var offset = kity.Vector.fromPoints(lastPosition, e.getPosition('view'));
-                    if (offset.length() > 10) {
-                        this.setStatus('hand', true);
-                        var paper = dragger._minder.getPaper();
-                        paper.setStyle('cursor', '-webkit-grabbing');
-                    }
+                    // var offset = kity.Vector.fromPoints(lastPosition, e.getPosition('view'));
+                    // if (offset.length() > 10) {
+                    //     this.setStatus('hand', true);
+                    //     var paper = dragger._minder.getPaper();
+                    //     paper.setStyle('cursor', '-webkit-grabbing');
+                    // }
                 })
 
             .on('hand.beforemousedown hand.beforetouchstart', function(e) {
                 // 已经被用户打开拖放模式
-                if (dragger.isEnabled()) {
-                    lastPosition = e.getPosition('view');
-                    e.stopPropagation();
-                    var paper = dragger._minder.getPaper();
-                    paper.setStyle('cursor', '-webkit-grabbing');
-                }
+                // if (dragger.isEnabled()) {
+                //     lastPosition = e.getPosition('view');
+                //     e.stopPropagation();
+                //     var paper = dragger._minder.getPaper();
+                //     paper.setStyle('cursor', '-webkit-grabbing');
+                // }
             })
 
             .on('hand.beforemousemove hand.beforetouchmove', function(e) {
-                if (lastPosition) {
-                    currentPosition = e.getPosition('view');
-                    // 当前偏移加上历史偏移
-                    var offset = kity.Vector.fromPoints(lastPosition, currentPosition);
-                    dragger.move(offset);
-                    e.stopPropagation();
-                    e.preventDefault();
-                    e.originEvent.preventDefault();
-                    lastPosition = currentPosition;
-                }
+                // if (lastPosition) {
+                //     currentPosition = e.getPosition('view');
+                //     // 当前偏移加上历史偏移
+                //     var offset = kity.Vector.fromPoints(lastPosition, currentPosition);
+                //     dragger.move(offset);
+                //     e.stopPropagation();
+                //     e.preventDefault();
+                //     e.originEvent.preventDefault();
+                //     lastPosition = currentPosition;
+                // }
             })
 
             .on('mouseup touchend', dragEnd);
@@ -331,6 +332,7 @@ define(function(require, exports, module) {
                     this._lastClientSize = a;
                 },
                 'selectionchange layoutallfinish': function(e) {
+                    if(e.type === 'selectionchange') return
                     var selected = this.getSelectedNode();
                     var minder = this;
 
