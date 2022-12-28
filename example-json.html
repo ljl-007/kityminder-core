@@ -17,7 +17,7 @@
 
     <style type="text/css">
       html,
-      body {
+      body,p {
         margin: 0;
         padding: 0;
         height: 100%;
@@ -26,8 +26,7 @@
       .mind {
         height: 100%;
         width: 100%;
-        /* width: 350px; */
-        /* height: 350px; */
+        /* width: 300px; */
         overflow: auto;
       }
 
@@ -47,8 +46,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
         -webkit-box-orient: vertical;
       }
     </style>
@@ -112,7 +111,7 @@
       },
       children: [
         {
-          data: { text: ['调试', '自知则知之'], type: 1, 'font-family': '宋体' }
+          data: { text: ['调试', '自知则知之'], specialText:'特殊文本串', type: 1, 'font-family': '宋体' }
         },
         {
           data: {
@@ -175,7 +174,20 @@
         }
       ]
     }
-    
+    const data1 = {
+      data: {
+        text: '百度产品',
+        imageSize: { width: 270, height: 129 },
+        type: 0,
+      },
+      children:[
+      { data: { text: '<p>视频</p>', type: 1 } },
+      { data: { maxRow:3,text: '<div>视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1</div>', type: 1 } },
+      { data: { text: '视频2', type: 1 } },
+      { data: {maxRow:3, text: '<p>视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3</p>', type: 3 } },
+      { data: { text: str, type: 1 } },
+      ]
+    }
 
     // console.log(renderToStringFun(str)) 
     define('start', function (require) {
@@ -191,22 +203,27 @@
         1: KN_HOVER_BACKGROUND,
         3: SUB_HOVER_BACKGROUND
       }
-      km.on('mouseover', e => {
+      // km.on('mouseover', e => {
+      //   const node = e.getTargetNode()
+      //   console.log(e)
+      //   if (node) {
+      //     const { rc } = node
+      //     background = node.getStyle('background')
+      //     outLine = rc.getItems().find(f => f.__KityClassName === 'Rect')
+      //     outLine && outLine.fill(node.getStyle('hover-background'))
+      //   } else {
+      //     outLine && outLine.fill(background)
+      //   }
+      // })
+      km.on('mouseup', e => {
         const node = e.getTargetNode()
-        if (node) {
-          const { rc } = node
-          background = node.getStyle('background')
-          outLine = rc.getItems().find(f => f.__KityClassName === 'Rect')
-          outLine && outLine.fill(node.getStyle('hover-background'))
-        } else {
-          outLine && outLine.fill(background)
-        }
+        console.log('最外层',e,node)
       })
       // 创建 km 实例
       /* global kityminder */
       km.renderTo('.mind')
       km.importJson({
-        root: data,
+        root: data1,
         template: 'catalogue',
         theme: 'catalogue-edit'
       })
@@ -217,7 +234,7 @@
         // mind.width = box.width
         // mind.height = box.height
         console.log(paper)
-        paper.setStyle({ width: box.width + 50, height: box.height + 50 })
+        paper.setStyle({ width: box.width + 50, height: box.height + 70 })
       }, 2000)
     })
     seajs.use('start')

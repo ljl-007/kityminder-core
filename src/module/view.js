@@ -35,7 +35,6 @@ define(function(require, exports, module) {
         },
 
         move: function(offset, duration) {
-            console.log('移动move')
             var minder = this._minder;
 
             var targetPosition = this.getMovement().offset(offset);
@@ -44,7 +43,6 @@ define(function(require, exports, module) {
         },
 
         moveTo: function(position, duration) {
-            console.log('移动moveTo')
             if (duration) {
                 var dragger = this;
 

@@ -3764,6 +3764,10 @@ _p[33] = {
                 return toString.apply(obj) == "[object " + v + "]";
             };
         });
+        exports.checkHtml = function(htmlStr) {
+            var reg = /<[^>]+>/g;
+            return reg.test(htmlStr);
+        };
     }
 };
 
@@ -7465,7 +7469,21 @@ _p[62] = {
                     return node.getData(name) || node.getStyle(name);
                 }
                 var nodeText = node.getText();
-                var textArr = nodeText ? utils.isArray(nodeText) ? nodeText : nodeText ? nodeText.split("\n") : [ "" ] : [ "" ];
+                var textArr = nodeText;
+                if (nodeText && utils.checkHtml(nodeText)) {
+                    textArr = [ nodeText ];
+                } else if (nodeText && utils.isArray(nodeText)) {
+                    textArr = nodeText;
+                } else {
+                    textArr = nodeText ? nodeText.split("\n") : [ " " ];
+                }
+                // var textArr = nodeText
+                //                 ? utils.isArray(nodeText)
+                //                 ? nodeText
+                //                 : nodeText
+                //                 ? nodeText.split('\n')
+                //                 : ['']
+                //                 : ['']
                 var lineHeight = node.getStyle("line-height");
                 var fontSize = getDataOrStyle("font-size");
                 var fontFamily = getDataOrStyle("font-family") || "default";
@@ -7508,7 +7526,8 @@ _p[62] = {
                         } else {
                             textShape.setAttr("dominant-baseline", "text-before-edge");
                         }
-                        if (utils.isString(textArr[growth])) {
+                        // console.log(utils.checkHtml(textArr[growth]),textArr[growth])
+                        if (!utils.checkHtml(textArr[growth])) {
                             textShape.setContent(textArr[growth]);
                         } else {
                             // 方式 一
@@ -7521,28 +7540,29 @@ _p[62] = {
                             //     }
                             // })
                             // 方式二
-                            var text_group = textArr[growth] ? textArr[growth].text_group : [];
-                            var p = document.createElement("p");
-                            for (var t = 0; t < text_group.length; t++) {
-                                var e = text_group[t];
-                                var span = document.createElement("span");
-                                span.innerHTML = e.text_key;
-                                p.appendChild(span);
-                            }
-                            var size = this.fitFormulaSize(p.innerHTML);
+                            // var text_group = textArr[growth]? textArr[growth].text_group:[]
+                            // var p = document.createElement('p')
+                            // for (var t = 0; t < text_group.length; t++) {
+                            //     var e = text_group[t];
+                            //     var span = document.createElement('span')
+                            //     span.innerHTML = textArr[growth]
+                            //     p.appendChild(span)
+                            // }
+                            // 方式三
+                            var size = this.fitFormulaSize(textArr[growth] || " ", node.getData("maxRow"));
                             var spaceTop = node.getStyle("space-top");
                             if (!size) return;
                             var x = 0;
                             var y = size.height - spaceTop;
                             // size.width > 300 && (size.width = 300)
-                            textShape = new kity.Formula().setUrl(p.innerHTML).setX(x | 0).setY(y | 0).setWidth(size.width | 0).setHeight(size.height | 0);
+                            textShape = new kity.Formula().setUrl(textArr[growth]).setX(x | 0).setY(y | 0).setWidth(size.width | 0).setHeight(size.height | 0);
                         }
                         textGroup.addItem(textShape);
                         growth++;
                     }
                 }
                 for (i = 0, text, textShape; text = textArr[i], textShape = textGroup.getItem(i); i++) {
-                    if (utils.isString(text)) {
+                    if (!utils.checkHtml(text)) {
                         textShape.setContent(text);
                     }
                     if (kity.Browser.ie || kity.Browser.edge) {
@@ -7596,19 +7616,19 @@ _p[62] = {
                     hook(node, text);
                 });
             },
-            fitFormulaSize: function(str) {
+            fitFormulaSize: function(str, line) {
                 var width = 0, height = 0;
                 var div = document.createElement("div");
                 div.innerHTML = str;
                 div.style.position = "absolute";
                 div.style.zIndex = "999";
                 div.style.fontSize = "14px";
-                // div.style.maxWidth = '300px'
+                div.style.maxWidth = "300px";
                 div.style.display = "-webkit-box";
                 div.style.overflow = "hidden";
                 div.style.textOverflow = "ellipsis";
                 div.style["-webkit-box-orient"] = "vertical";
-                div.style["-webkit-line-clamp"] = 2;
+                div.style["-webkit-line-clamp"] = line || 2;
                 document.body.appendChild(div);
                 width = parseFloat(getComputedStyle(div).width) + 1;
                 height = parseFloat(getComputedStyle(div).height);
@@ -7694,13 +7714,11 @@ _p[63] = {
                 return this._moveTimeline;
             },
             move: function(offset, duration) {
-                console.log("移动move");
                 var minder = this._minder;
                 var targetPosition = this.getMovement().offset(offset);
                 this.moveTo(targetPosition, duration);
             },
             moveTo: function(position, duration) {
-                console.log("移动moveTo");
                 if (duration) {
                     var dragger = this;
                     if (this._moveTimeline) this._moveTimeline.stop();

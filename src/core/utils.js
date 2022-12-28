@@ -62,4 +62,9 @@ define(function(require, exports) {
             return toString.apply(obj) == '[object ' + v + ']';
         };
     });
+
+    exports.checkHtml = function(htmlStr) {
+        var  reg = /<[^>]+>/g;
+        return reg.test(htmlStr);
+    }
 });
