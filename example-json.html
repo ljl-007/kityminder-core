@@ -17,7 +17,8 @@
 
     <style type="text/css">
       html,
-      body,p {
+      body,
+      p {
         margin: 0;
         padding: 0;
         height: 100%;
@@ -102,7 +103,8 @@
     seajs.config({
       base: './src'
     })
-    const str = '<p>公式题干测试<span class="ql-formula" data-value="\\sqrt[{2}] {2}">﻿<span contenteditable="false"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mroot><mn>2</mn><mn>2</mn></mroot></mrow><annotation encoding="application/x-tex">\\sqrt[{2}] {2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1.04em; vertical-align: -0.13278em;"></span><span class="mord sqrt"><span class="root"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.786884em;"><span class="" style="top: -2.96466em;"><span class="pstrut" style="height: 2.5em;"></span><span class="sizing reset-size6 size1 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.90722em;"><span class="svg-align" style="top: -3em;"><span class="pstrut" style="height: 3em;"></span><span class="mord" style="padding-left: 0.833em;"><span class="mord">2</span></span></span><span class="" style="top: -2.86722em;"><span class="pstrut" style="height: 3em;"></span><span class="hide-tail" style="min-width: 0.853em; height: 1.08em;"><svg width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702\nc-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14\nc0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54\nc44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10\ns173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429\nc69,-144,104.5,-217.7,106.5,-221\nl0 -0\nc5.3,-9.3,12,-14,20,-14\nH400000v40H845.2724\ns-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7\nc-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z\nM834 80h400000v40h-400000z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.13278em;"><span class=""></span></span></span></span></span></span></span></span></span>﻿</span></p>'
+    const str =
+      '<p>公式题干测试<span class="ql-formula" data-value="\\sqrt[{2}] {2}">﻿<span contenteditable="false"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mroot><mn>2</mn><mn>2</mn></mroot></mrow><annotation encoding="application/x-tex">\\sqrt[{2}] {2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1.04em; vertical-align: -0.13278em;"></span><span class="mord sqrt"><span class="root"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.786884em;"><span class="" style="top: -2.96466em;"><span class="pstrut" style="height: 2.5em;"></span><span class="sizing reset-size6 size1 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.90722em;"><span class="svg-align" style="top: -3em;"><span class="pstrut" style="height: 3em;"></span><span class="mord" style="padding-left: 0.833em;"><span class="mord">2</span></span></span><span class="" style="top: -2.86722em;"><span class="pstrut" style="height: 3em;"></span><span class="hide-tail" style="min-width: 0.853em; height: 1.08em;"><svg width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702\nc-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14\nc0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54\nc44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10\ns173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429\nc69,-144,104.5,-217.7,106.5,-221\nl0 -0\nc5.3,-9.3,12,-14,20,-14\nH400000v40H845.2724\ns-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7\nc-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z\nM834 80h400000v40h-400000z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.13278em;"><span class=""></span></span></span></span></span></span></span></span></span>﻿</span></p>'
     const data = {
       data: {
         text: '百度产品',
@@ -111,7 +113,12 @@
       },
       children: [
         {
-          data: { text: ['调试', '自知则知之'], specialText:'特殊文本串', type: 1, 'font-family': '宋体' }
+          data: {
+            text: ['调试', '自知则知之'],
+            specialText: '特殊文本串',
+            type: 1,
+            'font-family': '宋体'
+          }
         },
         {
           data: {
@@ -164,7 +171,7 @@
               {
                 text_group: [
                   {
-                    text_key:str
+                    text_key: str
                   }
                 ]
               }
@@ -178,18 +185,31 @@
       data: {
         text: '百度产品',
         imageSize: { width: 270, height: 129 },
-        type: 0,
+        type: 0
       },
-      children:[
-      { data: { text: '<p>视频</p>', type: 1 } },
-      { data: { maxRow:3,text: '<div>视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1</div>', type: 1 } },
-      { data: { text: '视频2', type: 1 } },
-      { data: {maxRow:3, text: '<p>视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3</p>', type: 3 } },
-      { data: { text: str, type: 1 } },
+      children: [
+        { data: { text: '<p>视频</p>', type: 1 } },
+        {
+          data: {
+            maxRow: 3,
+            text: '<div>视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1</div>',
+            type: 1
+          }
+        },
+        { data: { text: '视频2', type: 1 } },
+        {
+          data: {
+            maxRow: 3,
+            text: '<p>视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3</p>',
+            type: 3
+          }
+        },
+        { data: { text: str, type: 1 } },
+        { data: { text: '春text', type: 1 } }
       ]
     }
 
-    // console.log(renderToStringFun(str)) 
+    // console.log(renderToStringFun(str))
     define('start', function (require) {
       var Minder = require('kityminder').Minder
       var km = (window.km = new Minder())
@@ -216,8 +236,24 @@
       //   }
       // })
       km.on('mouseup', e => {
-        const node = e.getTargetNode()
-        console.log('最外层',e,node)
+        // const node = e.getTargetNode()
+        // const allNode = km.getAllNode()
+        // const targetNode = allNode.find(f => {
+        //   if (f.getLayoutBox) {
+        //     const { left, right, bottom, top } = f.getLayoutBox()
+        //     if (
+        //       e.getPosition().x > left &&
+        //       e.getPosition().x < right &&
+        //       e.getPosition().y > top &&
+        //       e.getPosition().y < bottom
+        //     ) {
+        //       return f
+        //     }
+        //   }
+        // })
+        // console.log(targetNode)
+        // km.toggleSelect(targetNode)
+        console.log('最外层', e, e.getPosition())
       })
       // 创建 km 实例
       /* global kityminder */
@@ -227,6 +263,8 @@
         template: 'catalogue',
         theme: 'catalogue-edit'
       })
+      // console.log(km)
+      // console.log(km.getAllNode())
       setTimeout(() => {
         const box = km._rc.getBoundaryBox()
         const paper = km.getPaper()
@@ -234,8 +272,13 @@
         // mind.width = box.width
         // mind.height = box.height
         console.log(paper)
-        paper.setStyle({ width: box.width + 50, height: box.height + 70 })
+        // paper.setStyle({ width: box.width + 50, height: box.height + 70 })
       }, 2000)
+      // setTimeout(() => {
+      //   console.log('刷新')
+      //   // km.refresh()
+      //   km.fire('layoutallfinish')
+      // }, 4000)
     })
     seajs.use('start')
   </script>

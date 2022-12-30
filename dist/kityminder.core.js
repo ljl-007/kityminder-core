@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2022-12-27
+ * Kity Minder Core - v1.4.50 - 2022-12-30
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
  * Copyright (c) 2022 Baidu FEX; Licensed BSD-3-Clause
@@ -7342,7 +7342,7 @@ _p[62] = {
         var Module = _p.r(20);
         var Renderer = _p.r(27);
         /**
-     * 针对不同系统、不同浏览器、不同字体做居中兼容性处理
+     * 
      * 暂时未增加Linux的处理
      */
         var FONT_ADJUST = {
@@ -7554,7 +7554,11 @@ _p[62] = {
                             if (!size) return;
                             var x = 0;
                             var y = size.height - spaceTop;
-                            // size.width > 300 && (size.width = 300)
+                            if (node.getData("maxRow") !== 1 && size.width > 300) {
+                                size.width = 300;
+                            } else {
+                                size.width += 8;
+                            }
                             textShape = new kity.Formula().setUrl(textArr[growth]).setX(x | 0).setY(y | 0).setWidth(size.width | 0).setHeight(size.height | 0);
                         }
                         textGroup.addItem(textShape);
@@ -7574,15 +7578,23 @@ _p[62] = {
                 if (node._currentTextHash == textHash && node._currentTextGroupBox) return node._currentTextGroupBox;
                 node._currentTextHash = textHash;
                 return function() {
-                    var y = yStart + i * fontSize * lineHeight;
                     textGroup.eachItem(function(i, textShape) {
+                        var y = yStart + i * fontSize * lineHeight;
                         // old
                         // var y = yStart + i * fontSize * lineHeight;
                         // new
-                        if (i) {
-                            y += textShape.getHeight();
+                        var h = 0;
+                        if (textShape.__KityClassName === "Formula" && node.getData("maxRow") !== 1) {
+                            if (node.getData("maxRow") === 1) {
+                                textShape.setY(y + 1);
+                            } else {
+                                textShape.setY(y + 3);
+                            }
+                            h = textShape.getHeight();
+                        } else {
+                            textShape.setY(y);
+                            h = fontSize;
                         }
-                        textShape.setY(y);
                         // if(textShape.items && textShape.items.length){
                         //     var s_x = 0,count = 0,V_K = 2, V_X = 13
                         //     for (var n = 0; n < textShape.items.length; n++) {
@@ -7603,7 +7615,7 @@ _p[62] = {
                         // old
                         // rBox = rBox.merge(new kity.Box(0, y, bbox.height && bbox.width || 1, fontSize));
                         // new
-                        rBox = rBox.merge(new kity.Box(0, y, bbox.height && bbox.width || 1, Math.max(fontSize, textShape.getHeight() - 4)));
+                        rBox = rBox.merge(new kity.Box(0, y, bbox.height && bbox.width || 1, h));
                     });
                     var nBox = new kity.Box(r(rBox.x), r(rBox.y), r(rBox.width), r(rBox.height));
                     node._currentTextGroupBox = nBox;
