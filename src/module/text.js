@@ -235,7 +235,7 @@ define(function(require, exports, module) {
                         //     p.appendChild(span)
                         // }
                         // 方式三
-                        var size = this.fitFormulaSize(textArr[growth]||' ',node.getData('maxRow'));
+                        var size = this.fitFormulaSize(textArr[growth]||' ',node.getData('maxRow'),node.getData("maxWidth"));
                         var spaceTop = node.getStyle("space-top");
                         if (!size) return;
                         var x = 0;
@@ -333,14 +333,16 @@ define(function(require, exports, module) {
             });
         },
 
-        fitFormulaSize: function(str,line) {
+        fitFormulaSize: function(str,line,maxWidth) {
             var width = 0, height = 0;
             var div = document.createElement('div')
             div.innerHTML = str
             div.style.position = 'absolute'
             div.style.zIndex = "999"
             div.style.fontSize = '14px'
-            div.style.maxWidth = '300px'
+            if(maxWidth){
+              div.style.maxWidth = maxWidth + 'px';
+            }
             div.style.display = '-webkit-box'
             div.style.overflow = 'hidden'
             div.style.textOverflow = 'ellipsis'
