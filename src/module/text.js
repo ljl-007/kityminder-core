@@ -8,7 +8,7 @@ define(function(require, exports, module) {
     var Module = require('../core/module');
     var Renderer = require('../core/render');
     /**
-     * 
+     * 针对不同系统、不同浏览器、不同字体做居中兼容性处理
      * 暂时未增加Linux的处理
      */
     var FONT_ADJUST = {
@@ -240,10 +240,10 @@ define(function(require, exports, module) {
                         if (!size) return;
                         var x = 0;
                         var y = size.height - spaceTop;
-                        if (node.getData("maxRow") !== 1 && size.width > 300) {
-                            size.width = 300;
+                        if (node.getData("maxRow") !== 1 && size.width > node.getData("maxWidth")) {
+                            size.width = node.getData("maxWidth");
                         } else {
-                            size.width += 8;
+                            size.width += 10;
                         }
                         textShape = new kity.Formula()
                                         .setUrl(textArr[growth])
@@ -283,7 +283,7 @@ define(function(require, exports, module) {
                     // var y = yStart + i * fontSize * lineHeight;
                     // new
                     var h = 0
-                    if(textShape.__KityClassName === 'Formula' &&  node.getData("maxRow") !== 1){
+                    if(textShape.__KityClassName === 'Formula'){
                         if(node.getData("maxRow") === 1){
                             textShape.setY(y + 1);
                         }else{

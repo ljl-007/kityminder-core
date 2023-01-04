@@ -382,7 +382,7 @@ define(function(require, exports, module) {
                         dy += view.top - focus.top + space;
                     }
 
-                    if (dx || dy) dragger.move(new kity.Point(dx, dy), 100);
+                    // if (dx || dy) dragger.move(new kity.Point(dx, dy), 100);
 
 
                 }

@@ -1,9 +1,9 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2022-12-30
+ * Kity Minder Core - v1.4.50 - 2023-01-03
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
- * Copyright (c) 2022 Baidu FEX; Licensed BSD-3-Clause
+ * Copyright (c) 2023 Baidu FEX; Licensed BSD-3-Clause
  * ====================================================
  */
 
@@ -7342,7 +7342,7 @@ _p[62] = {
         var Module = _p.r(20);
         var Renderer = _p.r(27);
         /**
-     * 
+     * 针对不同系统、不同浏览器、不同字体做居中兼容性处理
      * 暂时未增加Linux的处理
      */
         var FONT_ADJUST = {
@@ -7549,15 +7549,15 @@ _p[62] = {
                             //     p.appendChild(span)
                             // }
                             // 方式三
-                            var size = this.fitFormulaSize(textArr[growth] || " ", node.getData("maxRow"));
+                            var size = this.fitFormulaSize(textArr[growth] || " ", node.getData("maxRow"), node.getData("maxWidth"));
                             var spaceTop = node.getStyle("space-top");
                             if (!size) return;
                             var x = 0;
                             var y = size.height - spaceTop;
-                            if (node.getData("maxRow") !== 1 && size.width > 300) {
-                                size.width = 300;
+                            if (node.getData("maxRow") !== 1 && size.width > node.getData("maxWidth")) {
+                                size.width = node.getData("maxWidth");
                             } else {
-                                size.width += 8;
+                                size.width += 10;
                             }
                             textShape = new kity.Formula().setUrl(textArr[growth]).setX(x | 0).setY(y | 0).setWidth(size.width | 0).setHeight(size.height | 0);
                         }
@@ -7584,7 +7584,7 @@ _p[62] = {
                         // var y = yStart + i * fontSize * lineHeight;
                         // new
                         var h = 0;
-                        if (textShape.__KityClassName === "Formula" && node.getData("maxRow") !== 1) {
+                        if (textShape.__KityClassName === "Formula") {
                             if (node.getData("maxRow") === 1) {
                                 textShape.setY(y + 1);
                             } else {
@@ -7628,14 +7628,16 @@ _p[62] = {
                     hook(node, text);
                 });
             },
-            fitFormulaSize: function(str, line) {
+            fitFormulaSize: function(str, line, maxWidth) {
                 var width = 0, height = 0;
                 var div = document.createElement("div");
                 div.innerHTML = str;
                 div.style.position = "absolute";
                 div.style.zIndex = "999";
                 div.style.fontSize = "14px";
-                div.style.maxWidth = "300px";
+                if (maxWidth) {
+                    div.style.maxWidth = maxWidth + "px";
+                }
                 div.style.display = "-webkit-box";
                 div.style.overflow = "hidden";
                 div.style.textOverflow = "ellipsis";
@@ -7974,7 +7976,6 @@ _p[63] = {
                         if (focus.top < view.top) {
                             dy += view.top - focus.top + space;
                         }
-                        if (dx || dy) dragger.move(new kity.Point(dx, dy), 100);
                     }
                 }
             };
