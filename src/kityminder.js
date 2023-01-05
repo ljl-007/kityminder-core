@@ -88,6 +88,7 @@ define(function(require, exports, module) {
     require('./theme/wire');
     require('./theme/tianpan');
     require('./theme/catalogue-view');
+    require('./theme/h5-catalogue-view');
     require('./theme/catalogue-edit');
 
     require('./connect/arc');

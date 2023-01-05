@@ -1,0 +1,184 @@
+<!--
+ * @Author: liujinlei liujinlei@zhihuiliu.com
+ * @Date: 2022-11-16 17:49:34
+ * @LastEditors: liujinlei liujinlei@zhihuiliu.com
+ * @LastEditTime: 2022-12-19 11:38:46
+ * @FilePath: \kityminder-core\example.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>KityMinder Example</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link href="favicon.ico" type="image/x-icon" rel="shortcut icon" />
+    <link rel="stylesheet" href="src/kityminder.css" rel="stylesheet" />
+
+    <style type="text/css">
+      html,
+      body,
+      p {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
+      .mind {
+        height: 100%;
+        width: 100%;
+        /* width: 300px; */
+        overflow: auto;
+      }
+      #mind-box {
+        height: 100%;
+        width: 100%;
+      }
+
+      #minder-view {
+        height: 100%;
+        width: 100%;
+        /* position: absolute;
+                  border: 1px solid #ccc;
+                  left: 10px;
+                  top: 10px;
+                  bottom: 10px;
+                  right: 10px; */
+      }
+
+      path {
+        box-shadow: salmon !important;
+      }
+      .formulaBox {
+        color: red;
+        font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+    </style>
+
+    <script type="text/javascript" src="./kity.js"></script>
+    <!-- <script type="text/javascript" src="./katex.min.js"></script> -->
+  </head>
+  <body>
+    <div class="mind" id="mind-content">
+      <div id="mind-box"></div>
+    </div>
+  </body>
+
+  <!-- <script type="text/javascript" src="dist/kityminder.core.js"></script> -->
+  <script
+    type="text/javascript"
+    src="node_modules/seajs/dist/sea-debug.js"
+  ></script>
+  <!-- <script
+      type="text/javascript"
+      src="node_modules/kity/dist/kity.min.js"
+    ></script> -->
+  <script type="text/javascript">
+    seajs.config({
+      base: './src'
+    })
+    const str =
+      '<p>公式题干测试<span class="ql-formula" data-value="\\sqrt[{2}] {2}">﻿<span contenteditable="false"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mroot><mn>2</mn><mn>2</mn></mroot></mrow><annotation encoding="application/x-tex">\\sqrt[{2}] {2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1.04em; vertical-align: -0.13278em;"></span><span class="mord sqrt"><span class="root"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.786884em;"><span class="" style="top: -2.96466em;"><span class="pstrut" style="height: 2.5em;"></span><span class="sizing reset-size6 size1 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.90722em;"><span class="svg-align" style="top: -3em;"><span class="pstrut" style="height: 3em;"></span><span class="mord" style="padding-left: 0.833em;"><span class="mord">2</span></span></span><span class="" style="top: -2.86722em;"><span class="pstrut" style="height: 3em;"></span><span class="hide-tail" style="min-width: 0.853em; height: 1.08em;"><svg width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702\nc-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14\nc0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54\nc44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10\ns173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429\nc69,-144,104.5,-217.7,106.5,-221\nl0 -0\nc5.3,-9.3,12,-14,20,-14\nH400000v40H845.2724\ns-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7\nc-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z\nM834 80h400000v40h-400000z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.13278em;"><span class=""></span></span></span></span></span></span></span></span></span>﻿</span></p>'
+    const data1 = {
+      data: {
+        text: '百度产品',
+        type: 0
+      },
+      children: [
+        { data: { text: '<p>视频</p>', type: 1 } },
+        {
+          data: {
+            maxRow: 3,
+            maxWidth: 300,
+            text: '<div>视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1视频1</div>',
+            type: 1
+          }
+        },
+        { data: { text: '视频2', type: 1 } },
+        {
+          data: {
+            maxRow: 3,
+            maxWidth: 300,
+            text: '<p>视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3</p>',
+            type: 3,
+            shadow: '#000'
+          }
+        },
+        { data: { text: str, type: 1, maxWidth: 400 } },
+        { data: { text: '春text', type: 1 } },
+        {
+          data: {
+            maxRow: 3,
+            maxWidth: 300,
+            text: '<p>3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3</p>',
+            type: 3,
+            shadow: '#000'
+          }
+        },
+        {
+          data: {
+            maxRow: 3,
+            maxWidth: 300,
+            text: '<p>3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3</p>',
+            type: 3,
+            shadow: '#000'
+          }
+        },
+        {
+          data: {
+            maxRow: 3,
+            maxWidth: 300,
+            text: '<p>3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3视频3</p>',
+            type: 3,
+            shadow: '#000'
+          }
+        }
+      ]
+    }
+
+    // console.log(renderToStringFun(str))
+    define('start', function (require) {
+      var Minder = require('kityminder').Minder
+      var km = (window.km = new Minder())
+      // 创建 km 实例
+      /* global kityminder */
+      km.renderTo('#mind-box')
+      km.importJson({
+        root: data1,
+        template: 'catalogue',
+        theme: 'h5-catalogue-view'
+      })
+      console.log(km, km.getPaper())
+      km.on('layoutallfinish', () => {
+        const targetDom = document.getElementById('mind-box')
+        const svgDom = document.getElementsByTagName('svg')[0]
+        console.log('布局完成')
+        const gDom = targetDom.getElementsByTagName('g')[0]
+        let proportion =
+          gDom.getBBox().width > 375 ? 375 / gDom.getBBox().width : 1
+        console.log(proportion)
+        const shapeNode = km.getPaper().shapeNode
+        const ctm = shapeNode.getCTM()
+        ctm.a = proportion - 0.05
+        ctm.d = proportion - 0.02
+        const matrix = new kity.Matrix(
+          ctm.a,
+          ctm.b,
+          ctm.c,
+          ctm.d,
+          (ctm.e | 0) + 0.5,
+          (ctm.f | 0) + 0.5
+        )
+        shapeNode.setAttribute('transform', 'matrix(' + matrix.toString() + ')')
+        // svgDom.setAttribute('style', 'transform:scale(' + proportion + ');transform-origin: top left;')
+      })
+    })
+    seajs.use('start')
+  </script>
+</html>
