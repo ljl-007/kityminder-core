@@ -132,8 +132,9 @@ define(function(require, exports, module) {
             constructor: function(node) {
                 this.callBase();
                 this.radius = 6;
-                this.outline = new kity.Circle(this.radius).stroke('gray').fill('white');
-                this.sign = new kity.Path().stroke('gray');
+                var strokeColor = node.getStyle('connect-color') || 'gray'
+                this.outline = new kity.Circle(this.radius).stroke(strokeColor).fill('white');
+                this.sign = new kity.Path().stroke(strokeColor);
                 this.addShapes([this.outline, this.sign]);
                 this.initEvent(node);
                 this.setId(utils.uuid('node_expander'));
@@ -195,10 +196,11 @@ define(function(require, exports, module) {
                 var visible = node.parent.isExpanded();
 
                 expander.setState(visible && node.children.length ? node.getData(EXPAND_STATE_DATA) : 'hide');
-
+               
                 var vector = node.getLayoutVectorIn().normalize(expander.radius + node.getStyle('stroke-width'));
+               
                 var position = node.getVertexIn().offset(vector.reverse());
-
+                position.x -= 5
                 this.expander.setTranslate(position);
             }
         });

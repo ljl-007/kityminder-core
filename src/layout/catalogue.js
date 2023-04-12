@@ -12,7 +12,13 @@ define(function(require, exports, module) {
                 var pBox = parent.getContentBox();
                 var indent = 16
                 
-                parent.setVertexOut(new kity.Point(pBox.cx, pBox['bottom']));
+                if (parent.data.type === 0) {
+                    parent.setVertexOut(new kity.Point(pBox.cx, pBox['bottom']))
+                } else {
+                    parent.setVertexOut(
+                        new kity.Point(pBox.x + pBox.width / 3, pBox['bottom'])
+                    )
+                }
                 parent.setLayoutVectorOut(new kity.Vector(0, 1));
 
                 if (!children.length) return;

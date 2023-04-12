@@ -40,10 +40,10 @@ define(function(require, exports, module) {
         vector = kity.Vector.fromPoints(start, end);
         pathData.push('M', start);
         pathData.push('A', abs(vector.x), abs(vector.y), 0, 0, (vector.x * vector.y > 0 ? 0 : 1), end);
+        // 取消连线远点
+        // connection.setMarker(connectMarker);
+        // connectMarker.dot.fill(color);
 
-        connection.setMarker(connectMarker);
-        connectMarker.dot.fill(color);
-
-        connection.setPathData(pathData);
+        // connection.setPathData(pathData);
     });
 });
