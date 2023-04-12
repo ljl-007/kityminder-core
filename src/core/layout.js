@@ -53,7 +53,7 @@ define(function(require, exports, module) {
                 var matrix = node.getLayoutTransform();
                 switch (border) {
                     case 'left':
-                        return matrix.translate(offset - tbox.left, 0);
+                        return matrix.translate(offset - 0, 0);
                     case 'right':
                         return matrix.translate(offset - tbox.right, 0);
                     case 'top':

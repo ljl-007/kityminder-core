@@ -10,13 +10,13 @@ define(function(require, exports, module) {
 
             doLayout: function(parent, children, round) {
                 var pBox = parent.getContentBox();
-                var indent = 16
-                
+                var indent = 30
+                var offset_x = 20
                 if (parent.data.type === 0) {
                     parent.setVertexOut(new kity.Point(pBox.cx, pBox['bottom']))
                 } else {
                     parent.setVertexOut(
-                        new kity.Point(pBox.x + pBox.width / 3, pBox['bottom'])
+                        new kity.Point(pBox.x + offset_x, pBox['bottom'])
                     )
                 }
                 parent.setLayoutVectorOut(new kity.Vector(0, 1));
@@ -34,11 +34,17 @@ define(function(require, exports, module) {
 
                 this.align(children, 'left');
                 this.stack(children, 'y');
-
+                
                 var xAdjust = 0;
-                xAdjust += pBox.cx;
-                xAdjust += indent;
-                xAdjust += children[0].getStyle('margin-left');
+                if(parent.data.type === 0){
+                    xAdjust = pBox.cx + indent + 12
+                }else{
+                    xAdjust += indent + offset_x;
+                }
+                // old 
+                // xAdjust += pBox.cx;
+                // xAdjust += indent;
+                // xAdjust += children[0].getStyle('margin-left');
 
                 var yAdjust = 0;
                 
@@ -46,7 +52,6 @@ define(function(require, exports, module) {
                 yAdjust += parent.getStyle('margin-bottom');
                 yAdjust += children[0].getStyle('margin-top');
 
-            
                 this.move(children, xAdjust, yAdjust);
 
             },

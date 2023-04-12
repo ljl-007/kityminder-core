@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2023-01-05
+ * Kity Minder Core - v1.4.50 - 2023-04-12
  * https://github.com/fex-team/kityminder-core
  * GitHub: https://github.com/fex-team/kityminder-core.git 
  * Copyright (c) 2023 Baidu FEX; Licensed BSD-3-Clause
@@ -70,9 +70,6 @@ _p[0] = {
             vector = kity.Vector.fromPoints(start, end);
             pathData.push("M", start);
             pathData.push("A", abs(vector.x), abs(vector.y), 0, 0, vector.x * vector.y > 0 ? 0 : 1, end);
-            connection.setMarker(connectMarker);
-            connectMarker.dot.fill(color);
-            connection.setPathData(pathData);
         });
     }
 };
@@ -231,6 +228,7 @@ _p[4] = {
             } else {
                 pathData.push("V", pi.y);
             }
+            pi.x = po.round().x + 30;
             pathData.push("L", pi);
             connection.setPathData(pathData);
         });
@@ -1563,7 +1561,7 @@ _p[18] = {
                     var matrix = node.getLayoutTransform();
                     switch (border) {
                       case "left":
-                        return matrix.translate(offset - tbox.left, 0);
+                        return matrix.translate(offset - 0, 0);
 
                       case "right":
                         return matrix.translate(offset - tbox.right, 0);
@@ -4018,8 +4016,13 @@ _p[37] = {
                 base: Layout,
                 doLayout: function(parent, children, round) {
                     var pBox = parent.getContentBox();
-                    var indent = 16;
-                    parent.setVertexOut(new kity.Point(pBox.cx, pBox["bottom"]));
+                    var indent = 30;
+                    var offset_x = 20;
+                    if (parent.data.type === 0) {
+                        parent.setVertexOut(new kity.Point(pBox.cx, pBox["bottom"]));
+                    } else {
+                        parent.setVertexOut(new kity.Point(pBox.x + offset_x, pBox["bottom"]));
+                    }
                     parent.setLayoutVectorOut(new kity.Vector(0, 1));
                     if (!children.length) return;
                     children.forEach(function(child) {
@@ -4031,9 +4034,15 @@ _p[37] = {
                     this.align(children, "left");
                     this.stack(children, "y");
                     var xAdjust = 0;
-                    xAdjust += pBox.cx;
-                    xAdjust += indent;
-                    xAdjust += children[0].getStyle("margin-left");
+                    if (parent.data.type === 0) {
+                        xAdjust = pBox.cx + indent + 12;
+                    } else {
+                        xAdjust += indent + offset_x;
+                    }
+                    // old 
+                    // xAdjust += pBox.cx;
+                    // xAdjust += indent;
+                    // xAdjust += children[0].getStyle('margin-left');
                     var yAdjust = 0;
                     yAdjust += pBox.bottom;
                     yAdjust += parent.getStyle("margin-bottom");
@@ -5240,8 +5249,9 @@ _p[47] = {
                 constructor: function(node) {
                     this.callBase();
                     this.radius = 6;
-                    this.outline = new kity.Circle(this.radius).stroke("gray").fill("white");
-                    this.sign = new kity.Path().stroke("gray");
+                    var strokeColor = node.getStyle("connect-color") || "gray";
+                    this.outline = new kity.Circle(this.radius).stroke(strokeColor).fill("white");
+                    this.sign = new kity.Path().stroke(strokeColor);
                     this.addShapes([ this.outline, this.sign ]);
                     this.initEvent(node);
                     this.setId(utils.uuid("node_expander"));
@@ -5297,6 +5307,7 @@ _p[47] = {
                     expander.setState(visible && node.children.length ? node.getData(EXPAND_STATE_DATA) : "hide");
                     var vector = node.getLayoutVectorIn().normalize(expander.radius + node.getStyle("stroke-width"));
                     var position = node.getVertexIn().offset(vector.reverse());
+                    position.x -= 5;
                     this.expander.setTranslate(position);
                 }
             });

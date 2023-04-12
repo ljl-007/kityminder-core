@@ -27,6 +27,7 @@ define(function(require, exports, module) {
         } else {
             pathData.push('V', pi.y);
         }
+        pi.x  = po.round().x + 30
         pathData.push('L', pi);
 
         connection.setPathData(pathData);
